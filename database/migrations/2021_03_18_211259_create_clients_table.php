@@ -23,7 +23,7 @@ class CreateClientsTable extends Migration
 
             $table->foreignId('users_id')
                 ->references('id')
-                ->on('users');
+                ->on('users')->nullable();
 
             $table->foreignId('countries_id')
                 ->references('id')
