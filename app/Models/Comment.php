@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model
+class Comment extends Model
 {
     use HasFactory;
 
-    protected $table = "zones";
+    protected $table = "comments";
     protected $primaryKey = "id";
 
     protected $fillable=[
-        'name',
+        'type',
         'description',
+        'url_img',
+        'times_id',
     ];
 }

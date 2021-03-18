@@ -21,9 +21,18 @@ class CreateClientsTable extends Migration
             $table->string('email');
             $table->timestamps();
 
-            $table->foreignId('user_id')
+            $table->foreignId('users_id')
                 ->references('id')
                 ->on('users');
+
+            $table->foreignId('countries_id')
+                ->references('id')
+                ->on('countries');
+
+            $table->foreignId('zones_id')
+                ->references('id')
+                ->on('zones');
+
         });
     }
 
