@@ -11,7 +11,7 @@ use Auth;
 class AuthController extends Controller
 {
 
-    /* public function login(Request $request){
+    public function login(Request $request){
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
@@ -27,9 +27,9 @@ class AuthController extends Controller
                 'message' => 'Invalid Email or Password',
             ], 401);
         }
-    } */
+    }
 
-    public function login(Request $request)
+    /* public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email',
@@ -57,7 +57,7 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
         ]);
-    }
+    } */
 
 
     public function logout(Request $request){
