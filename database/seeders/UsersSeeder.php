@@ -43,5 +43,27 @@ class UsersSeeder extends Seeder
         ]);
 
         $users_all[] = $users->id;
+
+        $users = User::create([
+            'name'          => 'Robinson Yánez',
+            'role'          => 'Supervisor',
+            'cedula'        => '0503246407',
+            'phone'         => '0987787183',
+            'email'         => 'robin@example.com',
+            'password'      => Hash::make('123456789'),
+        ]);
+
+        $users_all[] = $users->id;
+
+        $users = User::create([
+            'name'          => 'Andres Núñez',
+            'role'          => 'Vigilante',
+            'cedula'        => '0503246381',
+            'phone'         => '0987008611',
+            'email'         => 'andres@example.com',
+            'password'      => Hash::make('123456789'),
+        ]);
+
+        $users_all[] = $users->id;
     }
 }

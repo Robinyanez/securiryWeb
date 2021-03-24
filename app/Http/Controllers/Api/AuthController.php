@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\User;
 use Auth;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -15,15 +16,16 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
-            $success['token'] = $user->createToken('Personal Access Token')->accessToken;
+            $role = $user->role;
+            $token = $user->createToken('Personal Access Token')->accessToken;
             return response()->json([
-                'success' => true,
-                'token' => $success,
-                'user' => $user
+                'status' => true,
+                'role' => $role,
+                'token' => $token
             ]);
         } else {
             return response()->json([
-                'success' => false,
+                'status' => false,
                 'message' => 'Invalid Email or Password',
             ], 401);
         }
@@ -65,12 +67,9 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json([
+            'status' => true,
             'message' => 'Successfully logged out'
         ]);
     }
 
-    public function user(Request $request){
-
-        return response()->json($request->user());
-    }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 
 
 /*
@@ -20,19 +21,15 @@ use App\Http\Controllers\Api\AuthController;
     return $request->user();
 }); */
 
-/* Route::group(['prefix' => 'auth'], function () {
-    Route::post('/login', 'Api\AuthController@login');
-    Route::post('/register', 'Api\AuthController@register');
-    Route::post('/logout', 'Api\AuthController@logout')->middleware('auth:api');
-}); */
-
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [AuthController::class, 'login']);
-    /* Route::post('/signup', [AuthController::class, 'signUp']); */
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/logout', [AuthController::class, 'logout']);
-        Route::get('/user', [AuthController::class, 'user']);
     });
+});
+
+Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
+    Route::get('/all', [UserController::class, 'user']);
 });
 
