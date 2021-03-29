@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +26,24 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/report/vigilant', [HomeController::class, 'reportVigilat'])->name('report.vigilant');
-Route::get('/report/supervidor', [HomeController::class, 'reportSupervisor'])->name('report.supervisor');
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/report/vigilant', [HomeController::class, 'reportVigilat'])->name('report.vigilant');
+    Route::get('/report/supervidor', [HomeController::class, 'reportSupervisor'])->name('report.supervisor');
+});
+
+Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/report/vigilant', [HomeController::class, 'reportVigilat'])->name('report.vigilant');
+    Route::get('/report/supervidor', [HomeController::class, 'reportSupervisor'])->name('report.supervisor');
+
+    Route::resources([
+        'user' => UserController::class,
+        'client' => ClientController::class,
+    ]);
+});
+
+
 
 /* Route::prefix('/admin')->name('admin.')->group(function(){
 }); */

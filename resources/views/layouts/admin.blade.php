@@ -20,6 +20,8 @@
     <!-- Custom styles for this template-->
     <link href={{ asset('admin/css/sb-admin-2.min.css') }} rel="stylesheet">
 
+    @stack('styles')
+
 </head>
 
 <body id="page-top">
@@ -45,7 +47,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Admin</span></a>
+                    @auth
+                        <span>{{ Auth::user()->name }}</span>
+                    @endauth
+                </a>
+                    {{-- <span>Admin</span></a> --}}
             </li>
 
             <!-- Divider -->
@@ -57,11 +63,27 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>INGRESOS</span>
+                </a>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Seminter:</h6>
+                        <a class="collapse-item" href="{{ route('admin.client.index')}}">Clientes</a>
+                        <a class="collapse-item" href="{{ route('admin.user.index')}}">Guardias y Supervidores</a>
+                    </div>
+                </div>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>GESTION</span>
+                    <span>CONTROL</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -82,9 +104,9 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Monitoreo actual:</h6>
-                        <a class="collapse-item" href="{{ route('report.vigilant')}}">Reportes de vigilantes</a>
-                        <a class="collapse-item" href="{{ route('report.supervisor')}}">Reportes de supervisores</a>
+                        <h6 class="collapse-header">Seminter:</h6>
+                        <a class="collapse-item" href="{{ route('admin.report.vigilant')}}">Reportes de vigilantes</a>
+                        <a class="collapse-item" href="{{ route('admin.report.supervisor')}}">Reportes de supervisores</a>
                         <a class="collapse-item" href="configurar.html">Configurar Usarios</a>
 
 
@@ -105,7 +127,7 @@
 
             <!-- Sidebar Message -->
             <div class="sidebar-card">
-                <img class="sidebar-card-illustration mb-2" src="admin/img/undraw_rocket.svg" alt="">
+                <img class="sidebar-card-illustration mb-2" src={{ asset('admin/img/undraw_rocket.svg') }} alt="">
                 <p class="text-center mb-2"><strong>Seminter </strong>Gestion integral de Perfil de Vigilante o Supervisor</p>
                 <a class="btn btn-success btn-sm" href="">Salir</a>
             </div>
@@ -598,6 +620,8 @@
     <!-- Page level custom scripts -->
     <script src={{ asset('admin/js/demo/chart-area-demo.js') }}></script>
     <script src={{ asset('admin/js/demo/chart-pie-demo.js') }}></script>
+
+    @stack('scripts')
 
 </body>
 

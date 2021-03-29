@@ -18,7 +18,9 @@ class CreateTimesTable extends Migration
             $table->date('date');
             $table->time('time');
             $table->dateTime('date_time');
-            $table->string('lat_lng');
+            $table->string('type');
+            $table->string('lat');
+            $table->string('lng');
             $table->timestamps();
 
             $table->foreignId('users_id')

@@ -16,7 +16,9 @@ class Time extends Model
         'date',
         'time',
         'date_time',
-        'lat_lng',
+        'type',
+        'lat',
+        'lng',
         'users_id',
     ];
 }
