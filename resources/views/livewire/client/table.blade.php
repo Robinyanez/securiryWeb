@@ -4,7 +4,7 @@
             <div class="row">
                 <h6 class="col-sm-12 col-md-6 mg-top-5 text-primary">Monitoreo de Clientes</h6>
                 <div class="col-sm-12 col-md-6">
-                    <a href="{{ route("admin.user.create") }}" type="button" class="btn btn-primary float-sm-right">
+                    <a href="{{ route("admin.client.create") }}" type="button" class="btn btn-primary float-sm-right">
                         Registrar nuevo Cliente
                     </a>
                 </div>
