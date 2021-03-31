@@ -48,4 +48,9 @@ class User extends Authenticatable
     public function times(){
         return $this->hasMany(Time::class);
     }
+
+    public function clients() {
+        /* return $this->hasOne(Client::class); */
+        return $this->hasOne(Client::class, 'users_id', 'id');
+    }
 }

@@ -21,4 +21,8 @@ class Client extends Model
         'countries_id',
         'zones_id',
     ];
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }
