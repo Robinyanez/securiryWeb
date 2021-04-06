@@ -26,7 +26,7 @@ class HomeController extends Controller
         return view('admin.index');
     }
 
-    public function reportVigilat()
+    /* public function reportVigilat()
     {
         return view('admin.report.vigilant');
     }
@@ -34,5 +34,5 @@ class HomeController extends Controller
     public function reportSupervisor()
     {
         return view('admin.report.supervisor');
-    }
+    } */
 }

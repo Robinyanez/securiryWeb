@@ -21,4 +21,8 @@ class Time extends Model
         'lng',
         'users_id',
     ];
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }

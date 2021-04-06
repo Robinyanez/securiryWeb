@@ -30,21 +30,22 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    /* public function user2(Request $request){
+    public function user2(Request $request){
 
-        $users_id = Auth::user()->id;
+        /* $users_id = Auth::user()->id; */
 
-        $user = DB::table('users as u')
+        /* $user = DB::table('users as u')
                 -> join('clients as c','u.id','=','c.users_id')
                 ->select('u.name as name', 'u.role as role', 'c.name as client')
                 ->where('u.id','=',$users_id)
-                ->get();
+                ->get(); */
 
-        $user = User::with('clients')->get();
+        /* $user = User::with('clients')->get(); */
+        $user = User::with('times')->where('role','Vigilante')->get();
 
-        return response()->json($request->user());
-        return response()->json($user);
-    } */
+/*         return response()->json($request->user()); */
+        return response($user);
+    }
 
     public function time(Request $request){
 
@@ -109,7 +110,7 @@ class UserController extends Controller
         $comment->description = $request->get('description');
 
         $file = $request->file('url_img');
-        $img = time().'_'.$file->getClientOriginalName();
+        $img = 'img_'.time().'_'.$file->getClientOriginalName();
         $route = public_path().'/img';
         $file->move($route , $img);
 

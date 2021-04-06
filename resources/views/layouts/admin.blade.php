@@ -107,7 +107,7 @@
                         <h6 class="collapse-header">Seminter:</h6>
                         <a class="collapse-item" href="{{ route('admin.report.vigilant')}}">Reportes de vigilantes</a>
                         <a class="collapse-item" href="{{ route('admin.report.supervisor')}}">Reportes de supervisores</a>
-                        <a class="collapse-item" href="configurar.html">Configurar Usarios</a>
+                        <a class="collapse-item" href="{{ route('admin.report.client')}}">Configurar Usarios</a>
 
 
                     </div>
