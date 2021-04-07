@@ -19,11 +19,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'slug',
         'role',
+        'puesto',
         'cedula',
         'phone',
         'email',
         'password',
+        'clients_id',
     ];
 
     /**
@@ -49,7 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Time::class, 'users_id', 'id');
     }
 
-    public function clients() {
+    /* public function clients() {
         return $this->hasOne(Client::class, 'users_id', 'id');
+    } */
+
+    public function client() {
+        return $this->belongsTo(Client::class, 'clients_id', 'id');
     }
 }

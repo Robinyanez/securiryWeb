@@ -89,10 +89,10 @@
                             <form class="user" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="email"
-                                        aria-describedby="emailHelp" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
-                                        placeholder="Email...">
-                                        @error('email')
+                                    <input type="text" class="form-control form-control-user @error('cedula') is-invalid @enderror" id="cedula"
+                                        aria-describedby="emailHelp" name="cedula" value="{{ old('cedula') }}" required autocomplete="cedula" autofocus
+                                        placeholder="Cédula...">
+                                        @error('cedula')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

@@ -27,18 +27,24 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
+/* Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'admin'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/report/vigilant', [HomeController::class, 'reportVigilat'])->name('report.vigilant');
     Route::get('/report/supervidor', [HomeController::class, 'reportSupervisor'])->name('report.supervisor');
-});
+}); */
 
 Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
+    /* Index */
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/report/vigilant', [ReportController::class, 'indexVigilat'])->name('report.vigilant');
-    Route::get('/report/supervidor', [ReportController::class, 'indexSupervisor'])->name('report.supervisor');
-    Route::get('/report/client', [ReportController::class, 'indexSupervisor'])->name('report.client');
-
+    /* Reports */
+    Route::get('/report/timeVigilant', [ReportController::class, 'timeVigilat'])->name('report.time.vigilant');
+    Route::get('/report/timeSupervidor', [ReportController::class, 'timeSupervisor'])->name('report.time.supervisor');
+    Route::get('/report/novedad', [ReportController::class, 'novedad'])->name('report.novedad');
+    Route::get('/report/consgina', [ReportController::class, 'consgina'])->name('report.consgina');
+    /* Inmports data */
+    Route::post('/import-client', [ClientController::class, 'importCli'])->name('import.client');
+    Route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');
+    /* Cruds */
     Route::resources([
         'user' => UserController::class,
         'client' => ClientController::class,

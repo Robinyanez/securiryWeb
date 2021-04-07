@@ -24,7 +24,9 @@ class UsersSeeder extends Seeder
 
         $users = User::create([
             'name'          => 'SuperAdmin',
+            'slug'          => 'superadmin',
             'role'          => 'SuperAdmin',
+            'puesto'        => 'SuperAdmin',
             'cedula'        => '0503246407',
             'phone'         => '0987787183',
             'email'         => 'superadmin@example.com',
@@ -35,7 +37,9 @@ class UsersSeeder extends Seeder
 
         $users = User::create([
             'name'          => 'Admin',
+            'slug'          => 'admin',
             'role'          => 'Admin',
+            'puesto'        => 'Admin',
             'cedula'        => '0503246381',
             'phone'         => '0987008611',
             'email'         => 'admin@example.com',
@@ -46,7 +50,9 @@ class UsersSeeder extends Seeder
 
         $users = User::create([
             'name'          => 'Robinson Yánez',
+            'slug'          => 'robinson-yanez',
             'role'          => 'Supervisor',
+            'puesto'        => 'Supervisor',
             'cedula'        => '0503246407',
             'phone'         => '0987787183',
             'email'         => 'robin@example.com',
@@ -57,7 +63,9 @@ class UsersSeeder extends Seeder
 
         $users = User::create([
             'name'          => 'Andres Núñez',
+            'slug'          => 'andres-nunez',
             'role'          => 'Vigilante',
+            'puesto'        => 'Vigilante',
             'cedula'        => '0503246381',
             'phone'         => '0987008611',
             'email'         => 'andres@example.com',

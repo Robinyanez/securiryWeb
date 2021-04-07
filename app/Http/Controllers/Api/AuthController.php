@@ -14,7 +14,7 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
-        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+        if (Auth::attempt(['cedula' => request('cedula'), 'password' => request('password')])) {
             $user = Auth::user();
             $role = $user->role;
             $token = $user->createToken('Personal Access Token')->accessToken;
@@ -30,6 +30,19 @@ class AuthController extends Controller
             ], 401);
         }
     }
+
+
+    public function logout(Request $request){
+
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
+    /* tests */
 
     /* public function login(Request $request)
     {
@@ -60,16 +73,5 @@ class AuthController extends Controller
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
         ]);
     } */
-
-
-    public function logout(Request $request){
-
-        $request->user()->token()->revoke();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Successfully logged out'
-        ]);
-    }
 
 }

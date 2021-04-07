@@ -18,34 +18,11 @@ class UserController extends Controller
 
         $users_id = Auth::user()->id;
 
-        /* $user = DB::table('users as u')
-                -> join('clients as c','u.id','=','c.users_id')
-                ->select('u.name as name', 'u.role as role', 'c.name as client')
-                ->where('u.id','=',$users_id)
-                ->get(); */
+        $user = User::with('client')->where('id',$users_id)->firstOrFail();
 
-        $user = User::with('clients')->where('id',$users_id)->firstOrFail();
-
-        /* return response()->json($request->user()); */
         return response()->json($user);
     }
 
-    public function user2(Request $request){
-
-        /* $users_id = Auth::user()->id; */
-
-        /* $user = DB::table('users as u')
-                -> join('clients as c','u.id','=','c.users_id')
-                ->select('u.name as name', 'u.role as role', 'c.name as client')
-                ->where('u.id','=',$users_id)
-                ->get(); */
-
-        /* $user = User::with('clients')->get(); */
-        $user = User::with('times')->where('role','Vigilante')->get();
-
-/*         return response()->json($request->user()); */
-        return response($user);
-    }
 
     public function time(Request $request){
 
@@ -129,4 +106,24 @@ class UserController extends Controller
             ], 500);
 
     }
+
+    /* tests */
+
+    public function user2(Request $request){
+
+        /* $users_id = Auth::user()->id; */
+
+        /* $user = DB::table('users as u')
+                -> join('clients as c','u.id','=','c.users_id')
+                ->select('u.name as name', 'u.role as role', 'c.name as client')
+                ->where('u.id','=',$users_id)
+                ->get(); */
+
+        /* $user = User::with('clients')->get(); */
+        $user = User::with('times')->where('role','Vigilante')->get();
+
+        /* return response()->json($request->user()); */
+        return response($user);
+    }
+
 }

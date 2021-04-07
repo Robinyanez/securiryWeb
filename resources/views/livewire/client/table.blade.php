@@ -2,8 +2,8 @@
     <div class="card-header">
         <div class="form-group">
             <div class="row">
-                <h6 class="col-sm-12 col-md-6 mg-top-5 text-primary">Monitoreo de Clientes</h6>
-                <div class="col-sm-12 col-md-6">
+                {{-- <h6 class="col-sm-12 col-md-6 mg-top-5 text-primary">Monitoreo de Clientes</h6> --}}
+                <div class="col-sm-12 col-md-12">
                     <a href="{{ route("admin.client.create") }}" type="button" class="btn btn-primary float-sm-right">
                         Registrar nuevo Cliente
                     </a>
@@ -75,6 +75,13 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
+                        <th scope="col" wire:click="sortByTable('city')">Ciudad
+                            @if ($sortDirection !== 'asc' && $sortField == 'email')
+                                <i class="far fa-angle-double-down"></i>
+                            @else
+                                <i class="far fa-angle-double-up"></i>
+                            @endif
+                        </th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -86,36 +93,41 @@
                         <td>{{ $value->cedula }}</td>
                         <td>{{ $value->phone }}</td>
                         <td>{{ $value->email }}</td>
+                        <td>{{ $value->city }}</td>
                         <td>
-                            <a href="{{ route('admin.user.edit', $value->id) }}" type="button" class="btn btn-outline-primary mt-1 mb-1 ml-3 mr-3">
+                            <a href="{{ route('admin.client.edit', $value->id) }}" type="button" class="btn btn-outline-primary mt-1 mb-1 ml-3 mr-3">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="" type="button" class="btn btn-outline-danger mt-1 mb-1 ml-3 mr-3" data-toggle="modal" data-target="#exampleModal-{{$value->id}}">
+                            <a href="" type="button" class="btn btn-outline-danger mt-1 mb-1 ml-3 mr-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
                     </tr>
 
                     {{-- Modal --}}
-                    <div class="modal fade" id="exampleModal-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Eliminar</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Esta seguro que desea eliminar este registro {{$value->id}}</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="{{ route('admin.user.destroy', $value->id) }}" type="button" class="btn btn-primary">Si</a>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <form action="{{ route('admin.client.destroy', $value->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <div class="modal fade" id="exampleModal-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Eliminar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Esta seguro que desea eliminar el registro <strong>{{$value->name}}</strong></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Si</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
                     @endforeach
                 </tbody>

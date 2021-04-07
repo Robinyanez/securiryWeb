@@ -33,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a href="{{ route('admin.home')}}" class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -41,25 +41,24 @@
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            {{-- <hr class="sidebar-divider my-0"> --}}
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+            {{-- <li class="nav-item active">
+                <a class="nav-link">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     @auth
                         <span>{{ Auth::user()->name }}</span>
                     @endauth
                 </a>
-                    {{-- <span>Admin</span></a> --}}
-            </li>
+            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Opciones
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -74,7 +73,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminter:</h6>
                         <a class="collapse-item" href="{{ route('admin.client.index')}}">Clientes</a>
-                        <a class="collapse-item" href="{{ route('admin.user.index')}}">Guardias y Supervidores</a>
+                        <a class="collapse-item" href="{{ route('admin.user.index')}}">Usuarios</a>
                     </div>
                 </div>
             </li>
@@ -88,7 +87,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminter:</h6>
-                        <a class="collapse-item" href="">Consignas</a>
+                        <a class="collapse-item" href="{{ route('admin.report.novedad')}}">Novedades</a>
+                        <a class="collapse-item" href="{{ route('admin.report.consgina')}}">Consignas</a>
 
                     </div>
                 </div>
@@ -99,23 +99,21 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>MONITOREO</span>
+                    <span>REPORTES</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminter:</h6>
-                        <a class="collapse-item" href="{{ route('admin.report.vigilant')}}">Reportes de vigilantes</a>
-                        <a class="collapse-item" href="{{ route('admin.report.supervisor')}}">Reportes de supervisores</a>
-                        <a class="collapse-item" href="{{ route('admin.report.client')}}">Configurar Usarios</a>
-
+                        <a class="collapse-item" href="{{ route('admin.report.time.vigilant')}}">Horas vigilantes</a>
+                        <a class="collapse-item" href={{ route('admin.report.time.supervisor')}}>Horas supervisor</a>
 
                     </div>
                 </div>
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            {{-- <hr class="sidebar-divider"> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -129,7 +127,8 @@
             <div class="sidebar-card">
                 <img class="sidebar-card-illustration mb-2" src={{ asset('admin/img/undraw_rocket.svg') }} alt="">
                 <p class="text-center mb-2"><strong>Seminter </strong>Gestion integral de Perfil de Vigilante o Supervisor</p>
-                <a class="btn btn-success btn-sm" href="">Salir</a>
+                <a class="btn btn-success btn-sm" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">Salir</a>
             </div>
 
         </ul>
@@ -279,7 +278,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Vigilante</span>
+                                @auth
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                @endauth
+                                {{-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">Vigilante</span> --}}
                                 <img class="img-profile rounded-circle"
                                     src={{ asset('admin/img/undraw_profile.svg') }}>
                             </a>
@@ -301,7 +303,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    Cerrar sesión
                                 </a>
                             </div>
                         </li>
@@ -590,15 +592,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Listo para salir?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Support\Facades\Crypt;
+use App\Imports\UsersImport;
+use Excel;
+use Str;
 
 class UserController extends Controller
 {
@@ -25,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $clients = Client::orderBy('name')->get();
+        return view('admin.user.create', compact('clients'));
     }
 
     /**
@@ -40,20 +45,25 @@ class UserController extends Controller
             'name' => 'required',
             'cedula' => 'required|unique:users,cedula',
             'role' => 'required',
+            'puesto' => 'required',
             'password' => 'required|min:8',
             'phone' => 'required|numeric|min:10',
             'email' => 'required|unique:users,email|email',
+            'clients_id' => 'required',
         ]);
 
         try{
 
         $users = new User;
         $users->name = $request->get('name');
+        $users->slug = Str::slug($request->get('name'),'-');
         $users->cedula = $request->get('cedula');
         $users->password = bcrypt($request->get('password'));
         $users->role = $request->get('role');
+        $users->puesto = $request->get('puesto');
         $users->phone = $request->get('phone');
         $users->email = $request->get('email');
+        $users->clients_id = $request->get('clients_id');
         $users->save();
         /* dd($users); */
 
@@ -87,9 +97,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::findOrFail($id);
-/*         $password = $users->password;
-        $password = Crypt::decryptString($password); */
-        return view('admin.user.edit', compact('users'));
+        $clients = Client::orderBy('name')->get();
+        return view('admin.user.edit', compact('users', 'clients'));
     }
 
     /**
@@ -105,20 +114,25 @@ class UserController extends Controller
             'name' => 'required',
             'cedula' => 'required|unique:users,cedula,'.$id,
             'role' => 'required',
+            'puesto' => 'required',
             'password' => 'required|min:8',
             'phone' => 'required|numeric|min:10',
             'email' => 'required|email|unique:users,email,'.$id,
+            'clients_id' => 'required',
         ]);
 
         try{
 
         $users = User::findOrFail($id);
         $users->name = $request->get('name');
+        $users->slug = Str::slug($request->get('name'),'-');
         $users->cedula = $request->get('cedula');
         $users->password = bcrypt($request->get('password'));
         $users->role = $request->get('role');
+        $users->puesto = $request->get('puesto');
         $users->phone = $request->get('phone');
         $users->email = $request->get('email');
+        $users->clients_id = $request->get('clients_id');
         $users->save();
         /* dd($users); */
 
@@ -140,9 +154,21 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $users = Client::findOrFail($id);
+        $users = User::findOrFail($id);
         $users->delete();
         session()->flash('success', 'Su registro se elimino correctamente');
         return redirect()->back();
     }
+
+    public function importUser(Request $request){
+
+        $file = $request->file('file');
+
+        Excel::import(new UsersImport, $file);
+
+        session()->flash('success', 'Sus registros se subieron correctamente');
+        return redirect()->back();
+    }
+
+
 }

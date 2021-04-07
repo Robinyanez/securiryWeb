@@ -35,5 +35,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
     Route::post('/comment', [UserController::class, 'comment']);
 });
 
+/* tests */
 Route::get('/profile2', [UserController::class, 'user2']);
 

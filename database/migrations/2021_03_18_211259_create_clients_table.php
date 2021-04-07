@@ -16,22 +16,23 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('cedula');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('slug');
+            $table->string('cedula')->nullable()->unique();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable()->unique();
+            $table->string('city')->nullable();
+            $table->string('zone')->nullable();
             $table->timestamps();
 
-            $table->foreignId('users_id')
-                ->references('id')
-                ->on('users')->nullable();
-
-            $table->foreignId('countries_id')
+            /* $table->foreignId('countries_id')
+                ->nullable()
                 ->references('id')
                 ->on('countries');
 
             $table->foreignId('zones_id')
+                ->nullable()
                 ->references('id')
-                ->on('zones');
+                ->on('zones'); */
 
         });
     }

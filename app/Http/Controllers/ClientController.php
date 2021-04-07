@@ -7,6 +7,10 @@ use App\Models\Country;
 use App\Models\Zone;
 use App\Models\Client;
 use App\Models\User;
+use App\Imports\ClientsImport;
+use Excel;
+use DB;
+use Str;
 /* use Auth;
 use Carbon\Carbon; */
 
@@ -32,10 +36,10 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $countries = Country::orderBy('name')->get();
+/*         $countries = Country::orderBy('name')->get();
         $zones = Zone::all();
-        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get();
-        return view('admin.client.create', compact('countries','zones','users'));
+        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get(); */
+        return view('admin.client.create'/* , compact('countries','zones','users') */);
     }
 
     /**
@@ -48,24 +52,23 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'cedula' => 'required|unique:clients,cedula',
+            /* 'cedula' => 'unique:clients,cedula', */
             'phone' => 'required|numeric|min:10',
             'email' => 'required|unique:clients,email|email',
-            'users_id' => 'required',
-            'countries_id' => 'required',
-            'zones_id' => 'required',
+            'city' => 'required',
+            'zone' => 'required',
         ]);
 
         try{
 
         $clients = new Client;
         $clients->name = $request->get('name');
+        $clients->slug = Str::slug($request->get('name'),'-');
         $clients->cedula = $request->get('cedula');
         $clients->phone = $request->get('phone');
         $clients->email = $request->get('email');
-        $clients->users_id = $request->get('users_id');
-        $clients->countries_id = $request->get('countries_id');
-        $clients->zones_id = $request->get('zones_id');
+        $clients->city = $request->get('city');
+        $clients->zone = $request->get('zone');
         $clients->save();
         /* dd($clients); */
 
@@ -99,10 +102,10 @@ class ClientController extends Controller
     public function edit($id)
     {
         $clients = Client::findOrFail($id);
-        $countries = Country::orderBy('name')->get();
+        /* $countries = Country::orderBy('name')->get();
         $zones = Zone::all();
-        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get();
-        return view('admin.client.edit', compact('clients','countries','zones','users'));
+        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get(); */
+        return view('admin.client.edit', compact('clients'/* ,'countries','zones','users' */));
     }
 
     /**
@@ -116,29 +119,28 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'cedula' => 'required|unique:clients,cedula,'.$id,
+            /* 'cedula' => 'unique:clients,cedula,'.$id, */
             'phone' => 'required|numeric|min:10',
             'email' => 'required|email|unique:clients,email,'.$id,
-            'users_id' => 'required',
-            'countries_id' => 'required',
-            'zones_id' => 'required',
+            'city' => 'required',
+            'zone' => 'required',
         ]);
 
         try{
 
         $clients = Client::findOrFail($id);
         $clients->name = $request->get('name');
+        $clients->slug = Str::slug($request->get('name'),'-');
         $clients->cedula = $request->get('cedula');
         $clients->phone = $request->get('phone');
         $clients->email = $request->get('email');
-        $clients->users_id = $request->get('users_id');
-        $clients->countries_id = $request->get('countries_id');
-        $clients->zones_id = $request->get('zones_id');
+        $clients->city = $request->get('city');
+        $clients->zone = $request->get('zone');
         $clients->save();
         /* dd($clients); */
 
         session()->flash('success', 'Su registro se actualizo correctamente');
-            return redirect()->route('admin.client.index');
+        return redirect()->route('admin.client.index');
 
         }catch(\Exception $e){
 
@@ -160,4 +162,15 @@ class ClientController extends Controller
         session()->flash('success', 'Su registro se elimino correctamente');
         return redirect()->back();
     }
+
+    public function importCli(Request $request){
+
+        $file = $request->file('file');
+
+        Excel::import(new ClientsImport, $file);
+
+        session()->flash('success', 'Sus registros se subieron correctamente');
+        return redirect()->back();
+    }
+
 }

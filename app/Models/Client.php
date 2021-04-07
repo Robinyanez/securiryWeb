@@ -14,15 +14,19 @@ class Client extends Model
 
     protected $fillable=[
         'name',
+        'slug',
         'cedula',
         'phone',
         'email',
-        'users_id',
-        'countries_id',
-        'zones_id',
+        'city',
+        'zone'
     ];
 
-    public function users(){
+    /* public function users(){
         return $this->belongsTo(User::class);
+    } */
+
+    public function users() {
+        return $this->hasMany(User::class, 'clients_id', 'id');
     }
 }

@@ -4,10 +4,9 @@ namespace App\Http\Livewire\Report;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 use DB;
 
-class Rvigilat extends Component
+class Rnovedad extends Component
 {
     use WithPagination;
 
@@ -42,17 +41,16 @@ class Rvigilat extends Component
 
         $users = DB::table('users as u')
                 -> join('times as t','u.id','=','t.users_id')
-                ->select('u.id as id','u.name as name', 't.lat as lat', 't.lng as lng', 't.date_time as date')
-                ->where('role', 'Vigilante')
+                -> join('comments as c','c.times_id','=','t.id')
+                ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat','t.lng as lng',
+                        't.date_time as date', 'c.description as description', 'c.url_img as url_img')
+                ->where('t.type', 'Novedad')
                 ->where('name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 
-        /* $users = User::with('times')
-                    ->where('role', 'Vigilante')
-                    ->where('name', 'LIKE', "%{$this->search}%")
-                    ->orderBy($this->sortField, $this->sortDirection)
-                    ->paginate($this->perPage); */
-        return view('livewire.report.rvigilat', compact('users'));
+        /* dd($users); */
+
+        return view('livewire.report.rnovedad', compact('users'));
     }
 }
