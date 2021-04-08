@@ -45,7 +45,7 @@ class Rnovedad extends Component
                 ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat','t.lng as lng',
                         't.date_time as date', 'c.description as description', 'c.url_img as url_img')
                 ->where('t.type', 'Novedad')
-                ->where('name', 'LIKE', "%{$this->search}%")
+                ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 

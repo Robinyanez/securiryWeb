@@ -61,6 +61,13 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
+                        <th scope="col" wire:click="sortByTable('puesto')">Puesto
+                            @if ($sortDirection !== 'asc' && $sortField == 'role')
+                                <i class="far fa-angle-double-down"></i>
+                            @else
+                                <i class="far fa-angle-double-up"></i>
+                            @endif
+                        </th>
                         <th scope="col" wire:click="sortByTable('cedula')">Cédula
                             @if ($sortDirection !== 'asc' && $sortField == 'cedula')
                                 <i class="far fa-angle-double-down"></i>
@@ -75,13 +82,20 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
-                        <th scope="col" wire:click="sortByTable('email')">E-mail
-                            @if ($sortDirection !== 'asc' && $sortField == 'email')
+                        <th scope="col" wire:click="sortByTable('client')">Cliente
+                            @if ($sortDirection !== 'asc' && $sortField == 'phone')
                                 <i class="far fa-angle-double-down"></i>
                             @else
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
+                        {{-- <th scope="col" wire:click="sortByTable('email')">E-mail
+                            @if ($sortDirection !== 'asc' && $sortField == 'email')
+                                <i class="far fa-angle-double-down"></i>
+                            @else
+                                <i class="far fa-angle-double-up"></i>
+                            @endif
+                        </th> --}}
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -91,9 +105,11 @@
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
                         <td>{{ $value->role }}</td>
+                        <td>{{ $value->puesto }}</td>
                         <td>{{ $value->cedula }}</td>
                         <td>{{ $value->phone }}</td>
-                        <td>{{ $value->email }}</td>
+                        <td>{{ $value->client }}</td>
+                        {{-- <td>{{ $value->email }}</td> --}}
                         <td>
                             <a href="{{ route('admin.user.edit', $value->id) }}" type="button" class="btn btn-outline-primary mt-1 mb-1 ml-3 mr-3">
                                 <i class="fas fa-edit"></i>

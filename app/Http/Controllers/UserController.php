@@ -47,9 +47,9 @@ class UserController extends Controller
             'role' => 'required',
             'puesto' => 'required',
             'password' => 'required|min:8',
-            'phone' => 'required|numeric|min:10',
-            'email' => 'required|unique:users,email|email',
-            'clients_id' => 'required',
+            'phone' => 'numeric|min:10',
+            'email' => 'unique:users,email|email',
+            /* 'clients_id' => 'required', */
         ]);
 
         try{
@@ -116,9 +116,9 @@ class UserController extends Controller
             'role' => 'required',
             'puesto' => 'required',
             'password' => 'required|min:8',
-            'phone' => 'required|numeric|min:10',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'clients_id' => 'required',
+            'phone' => 'numeric|min:10',
+            'email' => 'email|unique:users,email,'.$id,
+            /* 'clients_id' => 'required', */
         ]);
 
         try{

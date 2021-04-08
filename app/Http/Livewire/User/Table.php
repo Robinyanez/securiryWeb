@@ -5,6 +5,7 @@ namespace App\Http\Livewire\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use DB;
 
 class Table extends Component
 {
@@ -39,9 +40,18 @@ class Table extends Component
 
     public function render(){
 
-        $users = User::where('name', 'LIKE', "%{$this->search}%")
+        $users = DB::table('users as u')
+                    -> join('clients as c','c.id','=','u.clients_id')
+                    ->select('u.id as id','u.name as name', 'u.role as role', 'u.puesto as puesto', 'u.cedula as cedula', 'u.phone as phone', 'c.name as client')
+                    ->where('u.name', 'LIKE', "%{$this->search}%")
+                    ->orderBy($this->sortField, $this->sortDirection)
+                    ->paginate($this->perPage);
+
+        /* dd($users); */
+
+        /* $users = User::where('name', 'LIKE', "%{$this->search}%")
                                 ->orderBy($this->sortField, $this->sortDirection)
-                                ->paginate($this->perPage);
+                                ->paginate($this->perPage); */
         return view('livewire.user.table', compact('users'));
     }
 }
