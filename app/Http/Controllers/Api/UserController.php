@@ -87,11 +87,11 @@ class UserController extends Controller
         $comment->description = $request->get('description');
 
         $file = $request->file('url_img');
-        $img = 'img_'.time().'_'.$file->getClientOriginalName();
+        $img = 'img_'.time().'_'.uniqid().'_'.$file->getClientOriginalName();
         $route = public_path().'/img';
         $file->move($route , $img);
 
-        $comment->url_img = '/img/'.$img;
+        $comment->url_img = env('APP_URL').'/img/'.$img;
         $comment->times_id = $time->id;
 
         if ($comment->save())
