@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ReportController;;
 
 
 /*
@@ -33,8 +34,13 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
     Route::get('/profile', [UserController::class, 'user']);
     Route::post('/time', [UserController::class, 'time']);
     Route::post('/comment', [UserController::class, 'comment']);
+    Route::get('/report/novedad', [ReportController::class, 'novedad']);
+    Route::get('/report/consigna', [ReportController::class, 'consigna']);
+
 });
 
 /* tests */
 Route::get('/profile2', [UserController::class, 'user2']);
+Route::get('/report/novedad2', [ReportController::class, 'novedad2']);
+    Route::get('/report/condigna2', [ReportController::class, 'consigna2']);
 
