@@ -4,6 +4,12 @@
 
     @livewireStyles
 
+    <style type="text/css">
+        #map {
+            height: 550px;
+        }
+    </style>
+
 @endpush
 
 @section('content')
@@ -25,5 +31,30 @@
 @push('scripts')
 
     @livewireScripts
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0IWtnotDvo-ciYGFLFU8RXWkC496NFcU&callback=initMap&libraries=&v=weekly"
+        async
+    ></script>
+
+    <script>
+        function positions(data1,data2){
+            const gpsPosition = {lat: data1, lng: data2 };
+            initMap(gpsPosition);
+        }
+
+        let map;
+
+        function initMap(gpsPosition) {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: gpsPosition,
+                zoom: 17,
+            });
+            const marker = new google.maps.Marker({
+            position: gpsPosition,
+            map: map,
+            });
+        }
+    </script>
 
 @endpush

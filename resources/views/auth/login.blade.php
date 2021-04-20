@@ -77,6 +77,23 @@
     <div class="col-xl-10 col-lg-12 col-md-9">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
+
+            @if(Session::has('error'))
+                <div class="alert alert-danger alert-outline alert-dismissible" role="alert">
+                    <div class="row">
+                        <div class="alert-icon">
+                            <i class="far fa-fw fa-bell"></i>
+                        </div>
+                        <div class="alert-message">
+                            {{Session::get('error')}}
+                        </div>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                </div>
+            @endif
+
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">

@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\User;
+namespace App\Http\Livewire\Report;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 use DB;
-use Auth;
 
-class Table extends Component
+class Rsospechoso extends Component
 {
     use WithPagination;
 
@@ -42,18 +40,17 @@ class Table extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                    -> join('clients as c','c.id','=','u.clients_id')
-                    ->select('u.id as id','u.name as name', 'u.role as role', 'u.puesto as puesto', 'u.cedula as cedula', 'u.phone as phone', 'c.name as client')
-                    ->where('u.name', 'LIKE', "%{$this->search}%")
-                    ->where('u.name', '!=', Auth::user()->id)
-                    ->orderBy($this->sortField, $this->sortDirection)
-                    ->paginate($this->perPage);
+                -> join('times as t','u.id','=','t.users_id')
+                -> join('comments as c','c.times_id','=','t.id')
+                ->select('u.id as id','u.name as name', 't.id as id_time','t.type as type', 't.lat as lat','t.lng as lng',
+                        't.date_time as date', 'c.description as description', 'c.url_img as url_img')
+                ->where('t.type', 'Presencia sospechoso')
+                ->where('u.name', 'LIKE', "%{$this->search}%")
+                ->orderBy($this->sortField, $this->sortDirection)
+                ->paginate($this->perPage);
 
         /* dd($users); */
 
-        /* $users = User::where('name', 'LIKE', "%{$this->search}%")
-                                ->orderBy($this->sortField, $this->sortDirection)
-                                ->paginate($this->perPage); */
-        return view('livewire.user.table', compact('users'));
+        return view('livewire.report.rsospechoso', compact('users'));
     }
 }

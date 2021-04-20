@@ -1,11 +1,4 @@
 <div class="card">
-    {{-- <div class="card-header">
-        <div class="form-group">
-            <div class="row">
-                <h6 class="col-sm-12 col-md-6 mg-top-5 text-primary">Reporte de horas para Vigilantes</h6>
-            </div>
-        </div>
-    </div> --}}
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-sm-10">
@@ -42,7 +35,7 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th> --}}
-                        <th scope="col" wire:click="sortByTable('name')">Nombre
+                        <th scope="col" wire:click="sortByTable('date')">Fecha
                             @if ($sortDirection !== 'asc' && $sortField == 'name')
                                 <i class="far fa-angle-double-down"></i>
                             @else
@@ -56,34 +49,37 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
-                        <th scope="col" {{-- wire:click="sortByTable('name')" --}}>Coordenadas
-                            {{-- @if ($sortDirection !== 'asc' && $sortField == 'name')
-                                <i class="far fa-angle-double-down"></i>
-                            @else
-                                <i class="far fa-angle-double-up"></i>
-                            @endif --}}
-                        </th>
-                        <th scope="col" wire:click="sortByTable('date')">Fecha
+                        <th scope="col">Coordenadas</th>
+                        <th scope="col" wire:click="sortByTable('name')">Nombre
                             @if ($sortDirection !== 'asc' && $sortField == 'name')
                                 <i class="far fa-angle-double-down"></i>
                             @else
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
+                        <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $value)
                         <tr>
                             {{-- <td>{{ $value->id }}</td> --}}
-                            <td>{{ $value->name }}</td>
+                            <td>{{ $value->date }}</td>
                             <td>{{ $value->type }}</td>
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
-                            <td>{{ $value->date }}</td>
+                            <td>{{ $value->name }}</td>
+                            <td>
+                                <a type="button" class="btn btn-outline-primary btnRepotes"  onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                    <i class="fas fa-map-marked-alt"></i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            @include('modal.position')
+
             <div class="container text-center d-flex justify-content-center align-items-center m-3">
                 {{ $users->links() }}
             </div>

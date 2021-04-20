@@ -95,10 +95,10 @@
                         <td>{{ $value->phone }}</td>
                         <td>{{ $value->email }}</td>
                         <td>
-                            <a href="{{ route('admin.client.edit', $value->id) }}" type="button" class="btn btn-outline-primary mt-1 mb-1 ml-3 mr-3">
+                            <a href="{{ route('admin.client.edit', $value->id) }}" type="button" class="btn btn-outline-primary ml-3">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="" type="button" class="btn btn-outline-danger mt-1 mb-1 ml-3 mr-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
+                            <a href="" type="button" class="btn btn-outline-danger ml-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>

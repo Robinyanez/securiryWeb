@@ -33,14 +33,20 @@ Auth::routes();
     Route::get('/report/supervidor', [HomeController::class, 'reportSupervisor'])->name('report.supervisor');
 }); */
 
-Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
+Route::prefix('/admin')->name('admin.')->middleware(['auth','admin'])->group(function(){
     /* Index */
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     /* Reports */
     Route::get('/report/timeVigilant', [ReportController::class, 'timeVigilat'])->name('report.time.vigilant');
     Route::get('/report/timeSupervidor', [ReportController::class, 'timeSupervisor'])->name('report.time.supervisor');
     Route::get('/report/novedad', [ReportController::class, 'novedad'])->name('report.novedad');
-    Route::get('/report/consgina', [ReportController::class, 'consgina'])->name('report.consgina');
+    Route::get('/report/consigna', [ReportController::class, 'consigna'])->name('report.consigna');
+    Route::get('/report/asalto', [ReportController::class, 'asalto'])->name('report.asalto');
+    Route::get('/report/sospechoso', [ReportController::class, 'sospechoso'])->name('report.sospechoso');
+    Route::get('/report/herido', [ReportController::class, 'herido'])->name('report.herido');
+    Route::get('/report/incendio', [ReportController::class, 'incendio'])->name('report.incendio');
+    Route::get('/report/manifestacion', [ReportController::class, 'manifestacion'])->name('report.manifestacion');
+    Route::get('/report/ausencia', [ReportController::class, 'ausencia'])->name('report.ausencia');
     /* Inmports data */
     Route::post('/import-client', [ClientController::class, 'importCli'])->name('import.client');
     Route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');

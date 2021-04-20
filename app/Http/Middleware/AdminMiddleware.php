@@ -17,18 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        if (auth()->user() && auth()->user()->role==='Admin'){
+            return $next($request);
+        }else{
+            return redirect('/')->with('error','Usted no tiene permisos de adminitrador para entrar.');
         }
-
-        if (Auth::user()->role === 'Admin') {
-            return redirect()->route('admin.home');
-        }
-
-        if (Auth::user()->role === 'SuperAdmin') {
-            return redirect()->route('admin.home');
-        }
-
-        return redirect('/');
     }
 }
