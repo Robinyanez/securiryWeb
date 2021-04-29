@@ -17,10 +17,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() &&  Auth::user()->is_admin){
+        if (Auth::user() && Auth::user()->is_admin == 1){
             return $next($request);
-        }else{
-            return redirect('/')->with('error','Usted no tiene permisos de adminitrador para entrar.');
         }
+
+        return redirect('/')->with('error','Usted no tiene permisos de adminitrador para entrar.');
     }
+
 }

@@ -31,8 +31,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-/* Route::prefix('/admin')->name('admin.')->middleware(['auth'])->group(function(){ */
-Route::prefix('/admin')->name('admin.')->group(function(){
+Route::middleware(['auth'])->prefix('/admin')->name('admin.')->group(function(){
+/* Route::prefix('/admin')->name('admin.')->group(function(){ */
     /* Index */
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     /* Reports */
