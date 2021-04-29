@@ -18,15 +18,15 @@ class Client extends Model
         'cedula',
         'phone',
         'email',
-        'city',
-        'zone'
+        'country_id',
+        'zone_id'
     ];
 
-    /* public function users(){
-        return $this->belongsTo(User::class);
-    } */
-
     public function users() {
-        return $this->hasMany(User::class, 'clients_id', 'id');
+        return $this->hasMany(User::class, 'client_id', 'id');
+    }
+
+    public function ciudad() {
+        return $this->belongsTo(Country::class, 'country_id', 'id');
     }
 }

@@ -13,7 +13,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Gestión de Usuarios</h1>
-        <div class="col-sm-12 col-md-3">
+        <div class="float-sm-right">
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-backdrop="static" data-target="#modalImporUser"><i
                     class="fas fa-download fa-sm text-white-50"></i> Import Usuarios</a>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"data-toggle="modal" data-backdrop="static" data-target="#modalExportUser"><i
@@ -39,11 +39,6 @@
                                     <label for="">Selecciones el archivo:</label>
                                     <input style="width: 400px" type="file" class="form-control" id="file"
                                         name="file" required placeholder="file...">
-                                        {{-- @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror --}}
                                 </div>
                             </div>
                         </div>
@@ -81,6 +76,13 @@
 @push('scripts')
 
     @livewireScripts
+    <script>
+        function confirmDeleteUser(user){
+            document.getElementById('strNameUser').textContent=user.dataset.username;
+            var formdelete= document.getElementById('mdConfirmDeleteUser');
+            formdelete.setAttribute('action','{{url('')}}/admin/user/'+user.dataset.userid);
+        }
+    </script>
 
 @endpush
 

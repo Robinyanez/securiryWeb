@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Client;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Client;
+use DB;
 
 class Table extends Component
 {
@@ -39,9 +40,15 @@ class Table extends Component
 
     public function render(){
 
-        $clients = Client::where('name', 'LIKE', "%{$this->search}%")
-                                ->orderBy($this->sortField, $this->sortDirection)
-                                ->paginate($this->perPage);
+        $clients = DB::table('clients as cli')
+                    ->join('countries as co','co.id','=','cli.country_id')
+                    /* ->join('zones as zo','zo.id','=','cli.zone_id') */
+                    ->select('cli.id as id','cli.name as name','cli.cedula as cedula','cli.phone as phone','cli.email as email','co.name as city'/* ,'zo.name as zona' */)
+                    ->orderBy($this->sortField, $this->sortDirection)
+                    ->paginate($this->perPage);
+
+        /* dd($clients); */
+
         return view('livewire.client.table', compact('clients'));
     }
 }

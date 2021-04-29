@@ -98,14 +98,14 @@
                             <a href="{{ route('admin.client.edit', $value->id) }}" type="button" class="btn btn-outline-primary ml-3">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="" type="button" class="btn btn-outline-danger ml-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
+                            {{-- <a href="" type="button" class="btn btn-outline-danger ml-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
                                 <i class="fas fa-trash"></i>
-                            </a>
+                            </a> --}}
                         </td>
                     </tr>
 
                     {{-- Modal --}}
-                    <form action="{{ route('admin.client.destroy', $value->id) }}" method="POST">
+                    {{-- <form action="{{ route('admin.client.destroy', $value->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal fade" id="exampleModal-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
 
                     @endforeach
                 </tbody>

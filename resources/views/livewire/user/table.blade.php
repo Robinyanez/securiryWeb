@@ -54,8 +54,8 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
-                        <th scope="col" wire:click="sortByTable('role')">Rol
-                            @if ($sortDirection !== 'asc' && $sortField == 'role')
+                        <th scope="col" wire:click="sortByTable('cargo')">Cargo
+                            @if ($sortDirection !== 'asc' && $sortField == 'cargo')
                                 <i class="far fa-angle-double-down"></i>
                             @else
                                 <i class="far fa-angle-double-up"></i>
@@ -75,13 +75,13 @@
                                 <i class="far fa-angle-double-up"></i>
                             @endif
                         </th>
-                        <th scope="col" wire:click="sortByTable('phone')">Teléfono
+                        {{-- <th scope="col" wire:click="sortByTable('phone')">Teléfono
                             @if ($sortDirection !== 'asc' && $sortField == 'phone')
                                 <i class="far fa-angle-double-down"></i>
                             @else
                                 <i class="far fa-angle-double-up"></i>
                             @endif
-                        </th>
+                        </th> --}}
                         <th scope="col" wire:click="sortByTable('client')">Cliente
                             @if ($sortDirection !== 'asc' && $sortField == 'phone')
                                 <i class="far fa-angle-double-down"></i>
@@ -104,24 +104,24 @@
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->name }}</td>
-                        <td>{{ $value->role }}</td>
+                        <td>{{ $value->cargo }}</td>
                         <td>{{ $value->puesto }}</td>
                         <td>{{ $value->cedula }}</td>
-                        <td>{{ $value->phone }}</td>
+                        {{-- <td>{{ $value->phone }}</td> --}}
                         <td>{{ $value->client }}</td>
                         {{-- <td>{{ $value->email }}</td> --}}
                         <td>
                             <a href="{{ route('admin.user.edit', $value->id) }}" type="button" class="btn btn-outline-primary ml-3">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="" type="button" class="btn btn-outline-danger ml-3" data-toggle="modal" data-backdrop="static" data-target="#exampleModal-{{$value->id}}">
+                            <a href="" type="button" class="btn btn-outline-danger ml-3" data-username="{{ $value->name }}" data-userid="{{ $value->id }}" onclick="confirmDeleteUser(this)"  data-toggle="modal" data-backdrop="static" data-target="#exampleModalDeleteUser">
                                 <i class="fas fa-trash"></i>
                             </a>
                         </td>
                     </tr>
 
                     {{-- Modal --}}
-                    <form action="{{ route('admin.user.destroy', $value->id) }}" method="POST">
+                    {{-- <form action="{{ route('admin.user.destroy', $value->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <div class="modal fade" id="exampleModal-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -143,11 +143,14 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
 
                     @endforeach
                 </tbody>
             </table>
+
+            @include('modal.deleteUser')
+
             <div class="container text-center d-flex justify-content-center align-items-center m-3">
                 {{ $users->links() }}
             </div>

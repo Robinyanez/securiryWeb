@@ -23,23 +23,9 @@ class UsersSeeder extends Seeder
         $users_all = [];
 
         $users = User::create([
-            'name'          => 'SuperAdmin',
-            'slug'          => 'superadmin',
-            'role'          => 'SuperAdmin',
-            'puesto'        => 'SuperAdmin',
-            'cedula'        => '6666666666',
-            'phone'         => '0987787183',
-            'email'         => 'superadmin@example.com',
-            'password'      => Hash::make('123456789'),
-        ]);
-
-        $users_all[] = $users->id;
-
-        $users = User::create([
             'name'          => 'Admin',
             'slug'          => 'admin',
-            'role'          => 'Admin',
-            'puesto'        => 'Admin',
+            'is_admin'      => true,
             'cedula'        => '7777777777',
             'phone'         => '0987008611',
             'email'         => 'admin@example.com',
@@ -51,12 +37,12 @@ class UsersSeeder extends Seeder
         $users = User::create([
             'name'          => 'Robinson Yánez',
             'slug'          => 'robinson-yanez',
-            'role'          => 'Supervisor',
-            'puesto'        => 'Supervisor',
+            'is_admin'      => false,
             'cedula'        => '8888888888',
             'phone'         => '0987787183',
             'email'         => 'robin@example.com',
             'password'      => Hash::make('123456789'),
+
         ]);
 
         $users_all[] = $users->id;
@@ -64,8 +50,7 @@ class UsersSeeder extends Seeder
         $users = User::create([
             'name'          => 'Andres Núñez',
             'slug'          => 'andres-nunez',
-            'role'          => 'Vigilante',
-            'puesto'        => 'Vigilante',
+            'is_admin'      => false,
             'cedula'        => '9999999999',
             'phone'         => '0987008611',
             'email'         => 'andres@example.com',

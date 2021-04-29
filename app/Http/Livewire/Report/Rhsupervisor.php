@@ -41,9 +41,9 @@ class Rhsupervisor extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                -> join('times as t','u.id','=','t.users_id')
+                -> join('times as t','u.id','=','t.user_id')
                 ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat', 't.lng as lng', 't.date_time as date')
-                ->where('u.role', 'Supervisor')
+                ->where('u.cargo_id','3')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);

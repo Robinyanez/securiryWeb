@@ -20,13 +20,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'slug',
+        'is_admin',
         'role',
-        'puesto',
         'cedula',
         'phone',
         'email',
         'password',
-        'clients_id',
+        'client_id',
+        'puesto_id',
+        'cargo_id',
     ];
 
     /**
@@ -49,14 +51,18 @@ class User extends Authenticatable
     ];
 
     public function times(){
-        return $this->hasMany(Time::class, 'users_id', 'id');
+        return $this->hasMany(Time::class, 'user_id', 'id');
     }
 
-    /* public function clients() {
-        return $this->hasOne(Client::class, 'users_id', 'id');
-    } */
-
     public function client() {
-        return $this->belongsTo(Client::class, 'clients_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
+    }
+
+    public function puesto() {
+        return $this->belongsTo(Puesto::class, 'puesto_id', 'id');
+    }
+
+    public function cargo() {
+        return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
     }
 }

@@ -17,8 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('role')->nullable();
-            $table->string('puesto')->nullable();
+            $table->boolean('is_admin')->default(false);
             $table->string('cedula')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->string('email')->nullable()->unique();
@@ -27,9 +26,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            /* $table->foreignId('clients_id')
-                ->references('id')
-                ->on('clients')->nullable(); */
         });
     }
 

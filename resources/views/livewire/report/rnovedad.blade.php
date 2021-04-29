@@ -75,11 +75,14 @@
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
                             <td>{{ $value->description}}</td>
                             <td>
-                                <img style="height: 100px; width: 100px;" src="{{ $value->url_img }}" class="rounded-circle">
+
+                                <a type="button"  data-toggle="modal" data-imagem="{{ $value->url_img }}" onClick="imgPosition('this');" data-backdrop="static" data-target="#modalImg">
+                                    <img style="height: 100px; width: 100px;" src="{{ $value->url_img }}" class="rounded-circle">
+                                </a>
                             </td>
                             <td>{{ $value->name }}</td>
                             <td>
-                                <a type="button" class="btn btn-outline-primary btnRepotes"  onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                <a type="button" class="btn btn-outline-primary btnRepotes" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
                             </td>
@@ -89,6 +92,7 @@
             </table>
 
             @include('modal.position')
+            @include('modal.img')
 
             <div class="container text-center d-flex justify-content-center align-items-center m-3">
                 {{ $users->links() }}

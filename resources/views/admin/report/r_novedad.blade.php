@@ -57,4 +57,10 @@
         }
     </script>
 
+    <script>
+        function imgPosition(element){
+            document.getElementById('imgModalP').src=element.dataset.imagem;
+        }
+    </script>
+
 @endpush

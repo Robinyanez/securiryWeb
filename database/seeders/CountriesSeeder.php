@@ -30,13 +30,5 @@ class CountriesSeeder extends Seeder
             ));
         }
 
-        /* $countries_all = [];
-
-        $countries = Country::create([
-            'name'          => 'Pichincha',
-        ]);
-
-        $countries_all[] = $countries->id; */
-
     }
 }

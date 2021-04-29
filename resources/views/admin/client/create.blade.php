@@ -31,9 +31,6 @@
     @endif
 
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Monitoreo de Clientes</h6>
-        </div> --}}
         <form class="user" method="POST" action="{{ route('admin.client.store') }}">
             <div class="card-body">
                 @csrf
@@ -54,7 +51,7 @@
                         <div class="form-group">
                             <label for="">Cédula:</label>
                             <input type="text" class="form-control @error('cedula') is-invalid @enderror" id="cedula"
-                                name="cedula" value="{{ old('cedula') }}" required placeholder="Cédula...">
+                                name="cedula" value="{{ old('cedula') }}" placeholder="Cédula...">
                                 @error('cedula')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -92,10 +89,16 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="">Provincia:</label>
-                            <input type="text" class="form-control @error('city') is-invalid @enderror" id="city"
-                                name="city" value="{{ old('city') }}" required placeholder="Ciudad...">
-                            @error('city')
+                            <label for="">Ciudad:</label>
+                            <select class="form-control @error('country_id') is-invalid @enderror" id="country_id" name="country_id">
+                                <option selected="selected" disabled>Elegir</option>
+                                @forelse ($countries as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @empty
+                                    <option value="" selected>No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('country_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -105,22 +108,15 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="">Zona:</label>
-                            <input type="text" class="form-control @error('zone') is-invalid @enderror" id="zone"
-                                name="zone" value="{{ old('zone') }}" required placeholder="Zona...">
-                            {{-- <select class="form-control @error('zone') is-invalid @enderror" id="zone" name="zone">
+                            <select class="form-control @error('zone_id') is-invalid @enderror" id="zone_id" name="zone_id">
                                 <option selected="selected" disabled>Elegir</option>
-                                    <option value="Zona 1">Zona 1</option>
-                                    <option value="Zona 2">Zona 2</option>
-                                    <option value="Zona 3">Zona 3</option>
-                                    <option value="Zona 4">Zona 4</option>
-                                    <option value="Zona 5">Zona 5</option>
-                                    <option value="Zona 6">Zona 6</option>
-                                    <option value="Zona 7">Zona 7</option>
-                                    <option value="Zona 8">Zona 8</option>
-                                    <option value="Zona 9">Zona 9</option>
-                                    <option value="Zona 10">Zona 10</option>
-                            </select> --}}
-                            @error('zone')
+                                @forelse ($zones as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @empty
+                                    <option value="" selected>No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('zone_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

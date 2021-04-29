@@ -74,6 +74,10 @@
                         <h6 class="collapse-header">Seminter:</h6>
                         <a class="collapse-item" href="{{ route('admin.client.index')}}">Clientes</a>
                         <a class="collapse-item" href="{{ route('admin.user.index')}}">Usuarios</a>
+                        <a class="collapse-item" href="{{ route('admin.puesto.index')}}">Puestos</a>
+                        <a class="collapse-item" href="{{ route('admin.cargo.index')}}">Cargos</a>
+                        <a class="collapse-item" href="{{ route('admin.country.index')}}">Ciudades</a>
+                        <a class="collapse-item" href="{{ route('admin.zone.index')}}">Zonas</a>
                     </div>
                 </div>
             </li>
@@ -89,6 +93,9 @@
                         <h6 class="collapse-header">Seminter:</h6>
                         <a class="collapse-item" href="{{ route('admin.report.novedad')}}">Novedades</a>
                         <a class="collapse-item" href="{{ route('admin.report.consigna')}}">Consignas</a>
+                        <a class="collapse-item" href="{{ route('admin.report.recomendacion')}}">Recomendaciones</a>
+                        <a class="collapse-item" href="{{ route('admin.report.reclamo')}}">Reclamos</a>
+                        <a class="collapse-item" href="{{ route('admin.report.denuncia')}}">Denuncia</a>
 
                     </div>
                 </div>
@@ -301,7 +308,6 @@
                                 @auth
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                 @endauth
-                                {{-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">Vigilante</span> --}}
                                 <img class="img-profile rounded-circle"
                                     src={{ asset('admin/img/undraw_profile.svg') }}>
                             </a>
@@ -310,16 +316,16 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Mi Perfil
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                {{-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
-                                </a>
+                                </a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

@@ -16,9 +16,9 @@ class ClientsImport implements ToModel
     public function model(array $row)
     {
         return new Client([
-            'name'      => $row[0],
-            'slug'      => Str::slug($row[0],'-'),
-            'city'      => $row[1],
+            'name'          => $row[0],
+            'slug'          => Str::slug($row[0],'-'),
+            'country_id'    => $row[1],
         ]);
     }
 }

@@ -1,7 +1,7 @@
-<form action="{{ route('admin.user.destroy', $value->id) }}" method="POST">
+<form action="{{ route('admin.user.destroy', $value->id) }}" method="POST" id="mdConfirmDeleteUser">
     @csrf
     @method('DELETE')
-    <div class="modal fade" id="exampleModal-{{$value->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalDeleteUser" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -11,7 +11,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta seguro que desea eliminar el registro <strong>{{$value->name}}</strong></p>
+                    <p>Esta seguro que desea eliminar el registro <strong id="strNameUser">{{$value->name}}</strong></p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Si</button>

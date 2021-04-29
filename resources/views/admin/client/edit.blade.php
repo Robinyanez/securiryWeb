@@ -29,9 +29,6 @@
     @endif
 
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Monitoreo de Clientes</h6>
-        </div> --}}
         <form class="user" method="POST" action="{{ route('admin.client.update', $clients->id) }}">
             <div class="card-body">
                 @csrf
@@ -41,7 +38,7 @@
                         <div class="form-group">
                             <label for="">Nombre:</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ $clients->name }}"
-                                name="name" value="{{ old('name') }}" required placeholder="Nombre...">
+                                name="name" value="{{ $clients->name }}" required placeholder="Nombre...">
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -53,7 +50,7 @@
                         <div class="form-group">
                             <label for="">Cédula:</label>
                             <input type="text" class="form-control @error('cedula') is-invalid @enderror" id="cedula" value="{{ $clients->cedula }}"
-                                name="cedula" value="{{ old('cedula') }}" placeholder="Cédula...">
+                                name="cedula" value="{{ $clients->cedula }}" placeholder="Cédula...">
                                 @error('cedula')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -67,7 +64,7 @@
                         <div class="form-group">
                             <label for="">Teléfono:</label>
                             <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ $clients->phone }}"
-                                name="phone" value="{{ old('phone') }}" placeholder="Teléfono...">
+                                name="phone" value="{{ $clients->phone }}" placeholder="Teléfono...">
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -79,7 +76,7 @@
                         <div class="form-group">
                             <label for="">E-mail:</label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ $clients->email }}"
-                                name="email" value="{{ old('email') }}" placeholder="E-mail...">
+                                name="email" value="{{ $clients->email }}" placeholder="E-mail...">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -91,10 +88,20 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="">Provincia:</label>
-                            <input type="text" class="form-control @error('city') is-invalid @enderror" id="city"
-                            name="city" value="{{ $clients->city }}" required placeholder="Ciudad...">
-                            @error('city')
+                            <label for="">Ciudad:</label>
+                            <select class="form-control @error('country_id') is-invalid @enderror" id="country_id" name="country_id">
+                                <option selected="selected" disabled>Elegir</option>
+                                @forelse ($countries as $item)
+                                    @if ($item->id == $clients->country_id)
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endif
+                                @empty
+                                    <option value="" selected>No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('country_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -104,9 +111,19 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="">Zona:</label>
-                            <input type="text" class="form-control @error('zone') is-invalid @enderror" id="zone"
-                                name="zone" value="{{ $clients->zone }}" placeholder="Zona...">
-                            @error('zone')
+                            <select class="form-control @error('zone_id') is-invalid @enderror" id="zone_id" name="zone_id">
+                                <option selected="selected" disabled>Elegir</option>
+                                @forelse ($zones as $item)
+                                    @if ($item->id == $clients->zone_id)
+                                        <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+                                    @else
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endif
+                                @empty
+                                    <option value="" selected>No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('zone_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -14,6 +14,11 @@ class Country extends Model
 
     protected $fillable=[
         'name',
+        'slug',
         'description',
     ];
+
+    public function clients() {
+        return $this->hasMany(Client::class, 'country_id', 'id');
+    }
 }

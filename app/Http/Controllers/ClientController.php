@@ -36,10 +36,9 @@ class ClientController extends Controller
      */
     public function create()
     {
-/*         $countries = Country::orderBy('name')->get();
-        $zones = Zone::all();
-        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get(); */
-        return view('admin.client.create'/* , compact('countries','zones','users') */);
+        $countries = Country::orderBy('name')->get();
+        $zones = Zone::orderBy('name')->get();
+        return view('admin.client.create', compact('countries','zones'));
     }
 
     /**
@@ -52,11 +51,10 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            /* 'cedula' => 'unique:clients,cedula', */
             'phone' => 'required|numeric|min:10',
-            'email' => 'required|unique:clients,email|email',
-            'city' => 'required',
-            'zone' => 'required',
+            'email' => 'required|email|unique:clients,email',
+            'country_id' => 'required',
+            'zone_id' => 'required',
         ]);
 
         try{
@@ -67,8 +65,8 @@ class ClientController extends Controller
         $clients->cedula = $request->get('cedula');
         $clients->phone = $request->get('phone');
         $clients->email = $request->get('email');
-        $clients->city = $request->get('city');
-        $clients->zone = $request->get('zone');
+        $clients->country_id = $request->get('country_id');
+        $clients->zone_id = $request->get('zone_id');
         $clients->save();
         /* dd($clients); */
 
@@ -102,10 +100,9 @@ class ClientController extends Controller
     public function edit($id)
     {
         $clients = Client::findOrFail($id);
-        /* $countries = Country::orderBy('name')->get();
-        $zones = Zone::all();
-        $users = User::where('role','Vigilante')->orWhere('role','Supervisor')->orderBy('name')->get(); */
-        return view('admin.client.edit', compact('clients'/* ,'countries','zones','users' */));
+        $countries = Country::orderBy('name')->get();
+        $zones = Zone::orderBy('name')->get();
+        return view('admin.client.edit', compact('clients','countries','zones'));
     }
 
     /**
@@ -119,11 +116,10 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            /* 'cedula' => 'unique:clients,cedula,'.$id, */
             'phone' => 'required|numeric|min:10',
             'email' => 'required|email|unique:clients,email,'.$id,
-            'city' => 'required',
-            'zone' => 'required',
+            'country_id' => 'required',
+            'zone_id' => 'required',
         ]);
 
         try{
@@ -134,8 +130,8 @@ class ClientController extends Controller
         $clients->cedula = $request->get('cedula');
         $clients->phone = $request->get('phone');
         $clients->email = $request->get('email');
-        $clients->city = $request->get('city');
-        $clients->zone = $request->get('zone');
+        $clients->country_id = $request->get('country_id');
+        $clients->zone_id = $request->get('zone_id');
         $clients->save();
         /* dd($clients); */
 
@@ -157,10 +153,10 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $clients = Client::findOrFail($id);
+        /* $clients = Client::findOrFail($id);
         $clients->delete();
         session()->flash('success', 'Su registro se elimino correctamente');
-        return redirect()->back();
+        return redirect()->back(); */
     }
 
     public function importCli(Request $request){

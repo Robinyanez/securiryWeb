@@ -19,10 +19,11 @@ class UsersImport implements ToModel
         return new User([
             'name'      => $row[0],
             'slug'      => Str::slug($row[0],'-'),
-            'role'      => $row[1],
-            'puesto'    => $row[2],
-            'cedula'    => $row[3],
-            'password'  => Hash::make($row[4]),
+            'cedula'    => $row[1],
+            'password'  => Hash::make($row[2]),
+            'client_id' => $row[3],
+            'puesto_id' => $row[4],
+            'cargo_id' => $row[5],
         ]);
     }
 }

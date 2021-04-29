@@ -29,9 +29,6 @@
     @endif
 
     <div class="card shadow mb-4">
-        {{-- <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Monitoreo de Guardias</h6>
-        </div> --}}
         <form class="user" method="POST" action="{{ route('admin.user.update', $users->id) }}">
             <div class="card-body">
                 @csrf
@@ -103,10 +100,20 @@
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
-                            <label for="">Rol:</label>
-                            <input type="text" class="form-control @error('role') is-invalid @enderror" id="role"
-                                name="role" value="{{ $users->role }}" required placeholder="Rol...">
-                            @error('role')
+                            <label for="">Cargo:</label>
+                            <select class="form-control @error('cargo_id') is-invalid @enderror" id="cargo_id" name="cargo_id">
+                                <option selected="selected" disabled>Elegir</option>
+                                @forelse($cargos as $value)
+                                    @if ($value->id == $users->cargo_id)
+                                        <option value="{{$value->id}}" selected>{{$value->name}}</option>
+                                    @else
+                                        <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endif
+                                @empty
+                                    <option value="">No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('cargo_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -118,9 +125,19 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="">Puesto:</label>
-                            <input type="text" class="form-control @error('puesto') is-invalid @enderror" id="puesto"
-                                name="puesto" value="{{ $users->puesto }}" required placeholder="Puesto...">
-                            @error('puesto')
+                            <select class="form-control @error('puesto_id') is-invalid @enderror" id="puesto_id" name="puesto_id">
+                                <option selected="selected" disabled>Elegir</option>
+                                @forelse($puestos as $value)
+                                    @if ($value->id == $users->puesto_id)
+                                        <option value="{{$value->id}}" selected>{{$value->name}}</option>
+                                    @else
+                                        <option value="{{$value->id}}">{{$value->name}}</option>
+                                    @endif
+                                @empty
+                                    <option value="">No existen datos</option>
+                                @endforelse
+                            </select>
+                            @error('puesto_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -130,19 +147,19 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label for="">Cliente:</label>
-                            <select class="form-control @error('clients_id') is-invalid @enderror" id="clients_id" name="clients_id">
+                            <select class="form-control @error('client_id') is-invalid @enderror" id="client_id" name="client_id">
                                 <option selected="selected" disabled>Elegir</option>
                                 @forelse($clients as $value)
-                                    @if ($value->id == $users->clients_id)
-                                        <option value="{{$value->id}}" selected="selected">{{$value->city}} - {{$value->name}}</option>
+                                    @if ($value->id == $users->client_id)
+                                        <option value="{{$value->id}}" selected="selected">{{$value->ciudad->name}} - {{$value->name}}</option>
                                     @else
-                                        <option value="{{$value->id}}">{{$value->city}} - {{$value->name}}</option>
+                                        <option value="{{$value->id}}">{{$value->ciudad->name}} - {{$value->name}}</option>
                                     @endif
                                 @empty
                                     <option value="">No existen datos</option>
                                 @endforelse
                             </select>
-                            @error('clients_id')
+                            @error('client_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

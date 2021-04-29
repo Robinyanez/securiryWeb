@@ -15,7 +15,10 @@ class Comment extends Model
     protected $fillable=[
         'type',
         'description',
-        'url_img',
         'times_id',
     ];
+
+    public function image(){
+        return $this->morphMany(User::class, 'imageable');
+    }
 }

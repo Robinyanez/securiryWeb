@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Puesto;
+use App\Models\Cargo;
 use Illuminate\Support\Facades\Crypt;
 use App\Imports\UsersImport;
 use Excel;
@@ -29,8 +31,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        $clients = Client::orderBy('name')->get();
-        return view('admin.user.create', compact('clients'));
+        $puestos = Puesto::orderBy('name')->get();
+        $cargos = Cargo::orderBy('name')->get();
+        $clients = Client::with('ciudad')->orderBy('name')->get();
+        return view('admin.user.create', compact('clients','puestos','cargos'));
     }
 
     /**
@@ -44,12 +48,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'cedula' => 'required|unique:users,cedula',
-            'role' => 'required',
-            'puesto' => 'required',
             'password' => 'required|min:8',
             'phone' => 'numeric|min:10',
             'email' => 'unique:users,email|email',
-            /* 'clients_id' => 'required', */
+            'client_id' => 'required',
+            'puesto_id' => 'required',
+            'cargo_id' => 'required',
         ]);
 
         try{
@@ -59,11 +63,11 @@ class UserController extends Controller
         $users->slug = Str::slug($request->get('name'),'-');
         $users->cedula = $request->get('cedula');
         $users->password = bcrypt($request->get('password'));
-        $users->role = $request->get('role');
-        $users->puesto = $request->get('puesto');
         $users->phone = $request->get('phone');
         $users->email = $request->get('email');
-        $users->clients_id = $request->get('clients_id');
+        $users->client_id = $request->get('client_id');
+        $users->puesto_id = $request->get('puesto_id');
+        $users->cargo_id = $request->get('cargo_id');
         $users->save();
         /* dd($users); */
 
@@ -97,8 +101,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::findOrFail($id);
-        $clients = Client::orderBy('name')->get();
-        return view('admin.user.edit', compact('users', 'clients'));
+        $puestos = Puesto::orderBy('name')->get();
+        $cargos = Cargo::orderBy('name')->get();
+        $clients = Client::with('ciudad')->orderBy('name')->get();
+        return view('admin.user.edit', compact('users','clients','puestos','cargos'));
     }
 
     /**
@@ -113,12 +119,12 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'cedula' => 'required|unique:users,cedula,'.$id,
-            'role' => 'required',
-            'puesto' => 'required',
             'password' => 'required|min:8',
             'phone' => 'numeric|min:10',
             'email' => 'email|unique:users,email,'.$id,
-            /* 'clients_id' => 'required', */
+            'client_id' => 'required',
+            'puesto_id' => 'required',
+            'cargo_id' => 'required',
         ]);
 
         try{
@@ -128,11 +134,11 @@ class UserController extends Controller
         $users->slug = Str::slug($request->get('name'),'-');
         $users->cedula = $request->get('cedula');
         $users->password = bcrypt($request->get('password'));
-        $users->role = $request->get('role');
-        $users->puesto = $request->get('puesto');
         $users->phone = $request->get('phone');
         $users->email = $request->get('email');
-        $users->clients_id = $request->get('clients_id');
+        $users->client_id = $request->get('client_id');
+        $users->puesto_id = $request->get('puesto_id');
+        $users->cargo_id = $request->get('cargo_id');
         $users->save();
         /* dd($users); */
 
@@ -155,7 +161,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         $users = User::findOrFail($id);
-        $users->delete();
+        /* $users->delete(); */
+        dd($users);
         session()->flash('success', 'Su registro se elimino correctamente');
         return redirect()->back();
     }
@@ -168,6 +175,10 @@ class UserController extends Controller
 
         session()->flash('success', 'Sus registros se subieron correctamente');
         return redirect()->back();
+    }
+
+    public function profile(){
+
     }
 
 }

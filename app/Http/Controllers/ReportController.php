@@ -47,4 +47,16 @@ class ReportController extends Controller
         return view('admin.report.r_ausencia');
     }
 
+    public function recomendacion(){
+        return view('admin.report.r_recomendacion');
+    }
+
+    public function reclamo(){
+        return view('admin.report.r_reclamo');
+    }
+
+    public function denuncia(){
+        return view('admin.report.r_denuncia');
+    }
+
 }

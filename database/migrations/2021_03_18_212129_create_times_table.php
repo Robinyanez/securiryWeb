@@ -23,7 +23,7 @@ class CreateTimesTable extends Migration
             $table->string('lng');
             $table->timestamps();
 
-            $table->foreignId('users_id')
+            $table->foreignId('user_id')
                 ->nullable()
                 ->references('id')
                 ->on('users');

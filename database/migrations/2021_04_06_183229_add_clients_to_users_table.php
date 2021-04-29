@@ -14,7 +14,7 @@ class AddClientsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('clients_id')
+            $table->foreignId('client_id')
                 ->nullable()
                 ->references('id')
                 ->on('clients');

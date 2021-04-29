@@ -40,8 +40,8 @@ class Rausencia extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                -> join('times as t','u.id','=','t.users_id')
-                -> join('comments as c','c.times_id','=','t.id')
+                -> join('times as t','u.id','=','t.user_id')
+                -> join('comments as c','c.time_id','=','t.id')
                 ->select('u.id as id','u.name as name', 't.id as id_time','t.type as type', 't.lat as lat','t.lng as lng',
                         't.date_time as date', 'c.description as description', 'c.url_img as url_img')
                 ->where('t.type', 'Aucencia Relevo')
