@@ -18,6 +18,8 @@ class Client extends Model
         'cedula',
         'phone',
         'email',
+        'lat',
+        'lng',
         'country_id',
         'zone_id'
     ];
@@ -28,5 +30,9 @@ class Client extends Model
 
     public function ciudad() {
         return $this->belongsTo(Country::class, 'country_id', 'id');
+    }
+
+    public function zone() {
+        return $this->belongsTo(zone::class, 'zone_id', 'id');
     }
 }

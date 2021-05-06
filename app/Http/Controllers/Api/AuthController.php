@@ -15,11 +15,15 @@ class AuthController extends Controller
     public function login(Request $request){
 
         if (Auth::attempt(['cedula' => request('cedula'), 'password' => request('password')])) {
-            $user = Auth::user();
+            /* $user = Auth::user(); */
+            $user_id = Auth::user()->id;
+            $user = User::with('client','client.zone')->where('id',$user_id)->firstOrFail();;
             $role = $user->cargo_id;
+            $zone = $user->client->zone_id;
             $token = $user->createToken('Personal Access Token')->accessToken;
             return response()->json([
                 'status' => true,
+                'zone' => $zone,
                 'role' => $role,
                 'token' => $token
             ]);

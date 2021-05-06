@@ -10,6 +10,7 @@ use App\Models\Apoyo;
 use App\Models\Comment;
 use App\Models\Client;
 use App\Models\Puesto;
+use App\Models\Zone;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -30,6 +31,13 @@ class UserController extends Controller
         $puesto = Puesto::orderBy('name')->get();
 
         return response()->json($puesto);
+    }
+
+    public function zone ($id){
+
+        $zone = Zone::where('id',$id)->orderBy('name')->get();
+
+        return response()->json($zone);
     }
 
 

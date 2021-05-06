@@ -18,7 +18,10 @@ class ClientsImport implements ToModel
         return new Client([
             'name'          => $row[0],
             'slug'          => Str::slug($row[0],'-'),
-            'country_id'    => $row[1],
+            'lat'          => $row[1],
+            'lng'          => $row[2],
+            'country_id'    => $row[3],
+            'zone_id'    => $row[4],
         ]);
     }
 }

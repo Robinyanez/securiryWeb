@@ -20,6 +20,8 @@ class CreateClientsTable extends Migration
             $table->string('cedula')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->string('email')->nullable()->unique();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->timestamps();
 
             $table->foreignId('country_id')

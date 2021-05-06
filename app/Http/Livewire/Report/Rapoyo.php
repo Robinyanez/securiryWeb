@@ -4,10 +4,9 @@ namespace App\Http\Livewire\Report;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\User;
 use DB;
 
-class Rhvigilat extends Component
+class Rapoyo extends Component
 {
     use WithPagination;
 
@@ -44,11 +43,11 @@ class Rhvigilat extends Component
                 -> join('times as t','u.id','=','t.user_id')
                 ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat', 't.lng as lng', 't.date_time as date')
                 ->where('u.cargo_id','4')
-                ->whereIn('t.type',['Salida Casa','Llegada Puesto','Apertura Parcial','Apertura Total','Cierre Parcial','Cierre Total','Inicio Turno','Fin Turno'])
+                ->where('t.type','Apoyo')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 
-        return view('livewire.report.rhvigilat', compact('users'));
+        return view('livewire.report.rapoyo', compact('users'));
     }
 }

@@ -44,6 +44,7 @@ class Rhsupervisor extends Component
                 -> join('times as t','u.id','=','t.user_id')
                 ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat', 't.lng as lng', 't.date_time as date')
                 ->where('u.cargo_id','3')
+                ->whereIn('t.type',['Salida Casa','Llegada Puesto','Apertura Parcial','Apertura Total','Cierre Parcial','Cierre Total','Inicio Turno','Fin Turno'])
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);

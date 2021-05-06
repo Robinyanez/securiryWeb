@@ -33,6 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
     Route::get('/profile', [UserController::class, 'profile']);
     Route::get('/puesto', [UserController::class, 'puesto']);
+    Route::get('/zone/{id}', [UserController::class, 'zone']);
     Route::post('/time', [UserController::class, 'time']);
     Route::post('/comment', [UserController::class, 'comment']);
     Route::post('/apoyo', [UserController::class, 'apoyo']);

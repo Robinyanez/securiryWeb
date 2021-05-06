@@ -18,4 +18,8 @@ class Zone extends Model
         'phone',
         'email',
     ];
+
+    public function clients() {
+        return $this->hasMany(Client::class, 'zone_id', 'id');
+    }
 }

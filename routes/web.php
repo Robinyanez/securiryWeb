@@ -49,6 +49,8 @@ Route::middleware(['auth'])->prefix('/admin')->name('admin.')->group(function(){
     Route::get('/report/incendio', [ReportController::class, 'incendio'])->name('report.incendio');
     Route::get('/report/manifestacion', [ReportController::class, 'manifestacion'])->name('report.manifestacion');
     Route::get('/report/ausencia', [ReportController::class, 'ausencia'])->name('report.ausencia');
+    Route::get('/report/apoyo', [ReportController::class, 'apoyo'])->name('report.apoyo');
+    Route::get('/report/hombre_vivo', [ReportController::class, 'hombreVivo'])->name('report.hombre.vivo');
     /* Inmports data */
     Route::post('/import-client', [ClientController::class, 'importCli'])->name('import.client');
     Route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');

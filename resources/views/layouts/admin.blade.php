@@ -132,8 +132,10 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminter:</h6>
-                        <a class="collapse-item" href="{{ route('admin.report.time.vigilant')}}">Horas vigilantes</a>
-                        <a class="collapse-item" href={{ route('admin.report.time.supervisor')}}>Horas supervisor</a>
+                        <a class="collapse-item" href="{{ route('admin.report.time.vigilant')}}">Horas Vigilantes</a>
+                        <a class="collapse-item" href={{ route('admin.report.time.supervisor')}}>Horas Supervisores</a>
+                        <a class="collapse-item" href={{ route('admin.report.apoyo')}}>Horas Apoyo</a>
+                        <a class="collapse-item" href={{ route('admin.report.hombre.vivo')}}>Horas Hombre Vivo</a>
 
                     </div>
                 </div>

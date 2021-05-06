@@ -59,4 +59,12 @@ class ReportController extends Controller
         return view('admin.report.r_denuncia');
     }
 
+    public function apoyo(){
+        return view('admin.report.rh_apoyo');
+    }
+
+    public function hombreVivo(){
+        return view('admin.report.rh_hombrevivo');
+    }
+
 }
