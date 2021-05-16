@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="{{ $value->url_img }}" id="imgModalP"  alt="">
+                <img style="height: 550px; width: 765px;" src="{{ $value->url_img }}" id="imgModalP"  alt="">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

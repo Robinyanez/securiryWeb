@@ -40,16 +40,12 @@ class Rincendio extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                -> join('times as t','u.id','=','t.user_id')
-                -> join('comments as c','c.time_id','=','t.id')
-                ->select('u.id as id','u.name as name', 't.id as id_time','t.type as type', 't.lat as lat','t.lng as lng',
-                        't.date_time as date', 'c.description as description', 'c.url_img as url_img')
+                ->join('times as t','u.id','=','t.user_id')
+                ->select('u.id as id','u.name as name', 't.lat as lat', 't.lng as lng', 't.date_time as date')
                 ->where('t.type', 'Incendio')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
-
-        /* dd($users); */
 
         return view('livewire.report.rincendio', compact('users'));
     }

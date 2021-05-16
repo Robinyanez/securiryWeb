@@ -19,6 +19,6 @@ class Comment extends Model
     ];
 
     public function image(){
-        return $this->morphMany(User::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

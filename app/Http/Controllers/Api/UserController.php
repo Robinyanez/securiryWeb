@@ -117,14 +117,29 @@ class UserController extends Controller
             $comment->type =  $request->get('type');
             $comment->description = $request->get('description');
 
-            $file = $request->file('url_img');
+            /* $file = $request->file('url_img');
             $img = 'img_'.time().'_'.uniqid().'_'.$file->getClientOriginalName();
             $route = public_path().'/img';
             $file->move($route , $img);
 
-            $comment->url_img = env('APP_URL').'/img/'.$img;
+            $comment->url_img = env('APP_URL').'/img/'.$img; */
+
             $comment->time_id = $time->id;
             $comment->save();
+
+            $urlimagenes = [];
+
+            $imagenes = $request->file('url_img');
+
+            foreach ($imagenes as $file) {
+
+                $img = 'img_'.time().'_'.uniqid().'_'.$file->getClientOriginalName();
+                $route = public_path().'/img';
+                $file->move($route , $img);
+                $urlimagenes[]['url'] = env('APP_URL').'/img/'.$img;
+            }
+
+            $comment->image()->createMany($urlimagenes);
 
             DB::commit();
 

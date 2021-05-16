@@ -33,7 +33,7 @@
     @livewireScripts
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0IWtnotDvo-ciYGFLFU8RXWkC496NFcU&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKeimb_KipxmYXC6r8TomOCWdWeOghRm0&callback=initMap&libraries=&v=weekly"
         async
     ></script>
 

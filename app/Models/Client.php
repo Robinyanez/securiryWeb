@@ -33,6 +33,6 @@ class Client extends Model
     }
 
     public function zone() {
-        return $this->belongsTo(zone::class, 'zone_id', 'id');
+        return $this->belongsTo(Zone::class, 'zone_id', 'id');
     }
 }

@@ -17,7 +17,7 @@ class AuthController extends Controller
         if (Auth::attempt(['cedula' => request('cedula'), 'password' => request('password')])) {
             /* $user = Auth::user(); */
             $user_id = Auth::user()->id;
-            $user = User::with('client','client.zone')->where('id',$user_id)->firstOrFail();;
+            $user = User::with('client','client.zone')->where('id',$user_id)->firstOrFail();
             $role = $user->cargo_id;
             $zone = $user->client->zone_id;
             $token = $user->createToken('Personal Access Token')->accessToken;

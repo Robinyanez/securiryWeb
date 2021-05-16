@@ -28,13 +28,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        {{-- <th scope="col" wire:click="sortByTable('id')">#
-                            @if ($sortDirection !== 'asc' && $sortField == 'id')
-                                <i class="far fa-angle-double-down"></i>
-                            @else
-                                <i class="far fa-angle-double-up"></i>
-                            @endif
-                        </th> --}}
                         <th scope="col" wire:click="sortByTable('date')">Fecha
                             @if ($sortDirection !== 'asc' && $sortField == 'name')
                                 <i class="far fa-angle-double-down"></i>
@@ -63,7 +56,6 @@
                 <tbody>
                     @foreach ($users as $value)
                         <tr>
-                            {{-- <td>{{ $value->id }}</td> --}}
                             <td>{{ $value->date }}</td>
                             <td>{{ $value->type }}</td>
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
