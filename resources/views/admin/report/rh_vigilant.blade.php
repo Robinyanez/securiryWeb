@@ -33,11 +33,50 @@
     @livewireScripts
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0IWtnotDvo-ciYGFLFU8RXWkC496NFcU&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_API')}}&callback=initMap&libraries=&v=weekly"
         async
     ></script>
 
     <script>
+        $(document).ready(function() {
+            eachSelect();
+        });
+
+        function eachSelect(){
+            $('.coordenadasMap').each(function(){
+                var id=  $(this).data('iditem');
+                var datosCliente=$(this).data('clientedatos').split(',');
+                var datosStaticos=$(this).data('estaticodatos').split(',');
+
+                var latitudStatico=parseFloat(datosStaticos[0]);
+                var longitudStatico=parseFloat(datosStaticos[1]);
+
+                var latitudCli=parseFloat(datosCliente[0]);
+                var longitudCli=parseFloat(datosCliente[1]);
+
+                var metrosDistancia=getDistanciaMetros(latitudStatico,longitudStatico,latitudCli,longitudCli);
+                if(metrosDistancia > 25){
+                    $('#btnMap'+id).removeClass('btn-outline-primary');
+                    $('#btnMap'+id).addClass('btn-outline-danger');
+                }
+            });
+        }
+
+        function getDistanciaMetros(lat1,lon1,lat2,lon2)
+        {
+            rad = function(x) {return x*Math.PI/180;}
+            var R = 6378.137; //Radio de la tierra en km
+            var dLat = rad( lat2 - lat1 );
+            var dLong = rad( lon2 - lon1 );
+            var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) *
+            Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+            //aquí obtienes la distancia en metros por la conversion 1Km =1000m
+            var d = R * c * 1000;
+            return d.toFixed(2) ;
+        }
+
         function positions(data1,data2){
             const gpsPosition = {lat: data1, lng: data2 };
             initMap(gpsPosition);

@@ -10,6 +10,7 @@ use App\Models\Apoyo;
 use App\Models\Comment;
 use App\Models\Client;
 use App\Models\Puesto;
+use App\Models\Image;
 use App\Models\Zone;
 use Auth;
 use Carbon\Carbon;
@@ -145,7 +146,8 @@ class UserController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $comment->toArray()
+                'data' => $comment->toArray(),
+                'img' => $imagenes
             ]);
 
         }catch (Exception $e) {
@@ -214,19 +216,63 @@ class UserController extends Controller
 
     public function user2(Request $request){
 
-        /* $users_id = Auth::user()->id; */
+        $users = DB::table('users as u')
+                ->join('times as t','u.id','=','t.user_id')
+                ->join('comments as c','c.time_id','=','t.id')
+                /* ->join('images as i','i.imageable_id','=','c.id') */
+                ->select('u.id as id','u.name as name', 't.id as id_time','t.type as type','c.id as id_comment', 't.lat as lat','t.lng as lng',
+                        't.date_time as date', 'c.description as description')
+                ->where('t.type', 'Novedad')
+                ->paginate(5);
+                /* ->get(); */
 
-        /* $user = DB::table('users as u')
-                -> join('clients as c','u.id','=','c.users_id')
-                ->select('u.name as name', 'u.role as role', 'c.name as client')
-                ->where('u.id','=',$users_id)
-                ->get(); */
+        $json = json_decode(json_encode($users));
 
-        /* $user = User::with('clients')->get(); */
-        $user = User::with('times')->where('role','Vigilante')->get();
+        /* dd($json->data); */
+        /* return response()->json($json->data); */
+        /* $dataUsers= $json->data; */
 
-        /* return response()->json($request->user()); */
-        return response($user);
+        /* return $json; */
+
+        /* dd($dataUsers); */
+
+        $prueba =[];
+
+        /* foreach($json as $value){
+            array_push($prueba, $value);
+            $em = Image::select('url')->where('imageable_id',$value->id_comment)->get();
+                foreach($em as $item){
+                    $empresa['url'] = $item->url;
+                }
+        } */
+
+        foreach($json->data as $value){
+
+            /* $prueba = $key->name; */
+
+            array_push($prueba, $value);
+            /* $image = Image::select('url')->where('imageable_id',$value->id_comment)->get(); */
+
+            /* foreach($image as $img){
+                return $img->url;
+            } */
+        }
+
+        dd($prueba,$json->data);
+
+        /* $image = DB::table('images')->select('url')->where('imageable_id',$json->data[0]->id_comment)->get(); */
+
+        /* $data = $json->data;
+
+        $images = json_decode(json_encode($image));
+
+        $temp = ['users' => $data, 'url_img' => $images];
+
+        $temp['users']['img'] = $images; */
+
+        /* array_push($data[0], $images); */
+
+        /* dd(json_decode(json_encode($users)),$image,$json,$data,$temp); */
     }
 
 }

@@ -41,8 +41,9 @@ class Rhvigilat extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                -> join('times as t','u.id','=','t.user_id')
-                ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat', 't.lng as lng', 't.date_time as date')
+                ->join('clients as c','c.id','=','u.client_id')
+                ->join('times as t','u.id','=','t.user_id')
+                ->select('t.id as id','u.name as name','c.lat as latcli','c.lng as lngcli','t.type as type','t.lat as lat','t.lng as lng','t.date_time as date')
                 ->where('u.cargo_id','4')
                 ->whereIn('t.type',['Salida Casa','Llegada Puesto','Apertura Parcial','Apertura Total','Cierre Parcial','Cierre Total','Inicio Turno','Fin Turno'])
                 ->where('u.name', 'LIKE', "%{$this->search}%")

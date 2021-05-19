@@ -28,40 +28,19 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col" wire:click="sortByTable('id')">#
-                            @if ($sortDirection !== 'asc' && $sortField == 'id')
-                                <i class="far fa-angle-double-down"></i>
-                            @else
-                                <i class="far fa-angle-double-up"></i>
-                            @endif
-                        </th>
                         <th scope="col" wire:click="sortByTable('date')">Fecha
-                            @if ($sortDirection !== 'asc' && $sortField == 'name')
-                                <i class="far fa-angle-double-down"></i>
+                            @if ($sortDirection !== 'asc' && $sortField == 'date')
+                                <i class="fas fa-sort-amount-down-alt"></i>
                             @else
-                                <i class="far fa-angle-double-up"></i>
+                                <i class="fas fa-sort-amount-up-alt"></i>
                             @endif
                         </th>
                         <th scope="col">Coordenadas</th>
-                        <th scope="col" wire:click="sortByTable('description')">Descripción
-                            @if ($sortDirection !== 'asc' && $sortField == 'name')
-                                <i class="far fa-angle-double-down"></i>
-                            @else
-                                <i class="far fa-angle-double-up"></i>
-                            @endif
-                        </th>
-                        <th scope="col" wire:click="sortByTable('url_img')">Imagen
-                            @if ($sortDirection !== 'asc' && $sortField == 'name')
-                                <i class="far fa-angle-double-down"></i>
-                            @else
-                                <i class="far fa-angle-double-up"></i>
-                            @endif
-                        </th>
                         <th scope="col" wire:click="sortByTable('name')">Nombre
                             @if ($sortDirection !== 'asc' && $sortField == 'name')
-                                <i class="far fa-angle-double-down"></i>
+                                <i class="fas fa-sort-amount-down-alt"></i>
                             @else
-                                <i class="far fa-angle-double-up"></i>
+                                <i class="fas fa-sort-amount-up-alt"></i>
                             @endif
                         </th>
                         <th>Opciones</th>
@@ -70,16 +49,12 @@
                 <tbody>
                     @foreach ($users as $value)
                         <tr>
-                            <td>{{ $value->id_time }}</td>
                             <td>{{ $value->date }}</td>
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
-                            <td>{{ $value->description}}</td>
-                            <td>
-                                <img style="height: 100px; width: 100px;" src="{{ $value->url_img }}" class="rounded-circle">
-                            </td>
                             <td>{{ $value->name }}</td>
                             <td>
-                                <a type="button" class="btn btn-outline-primary btnRepotes"  onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}"  data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
+                                <a type="button" class="btn btn-outline-primary btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
                             </td>

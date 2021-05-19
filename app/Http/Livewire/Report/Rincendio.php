@@ -40,8 +40,9 @@ class Rincendio extends Component
     public function render(){
 
         $users = DB::table('users as u')
+                ->join('clients as c','c.id','=','u.client_id')
                 ->join('times as t','u.id','=','t.user_id')
-                ->select('u.id as id','u.name as name', 't.lat as lat', 't.lng as lng', 't.date_time as date')
+                ->select('t.id as id','u.name as name','c.lat as latcli','c.lng as lngcli','t.lat as lat','t.lng as lng', 't.date_time as date')
                 ->where('t.type', 'Incendio')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)

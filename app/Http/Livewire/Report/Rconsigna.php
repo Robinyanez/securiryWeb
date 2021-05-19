@@ -40,17 +40,20 @@ class Rconsigna extends Component
     public function render(){
 
         $users = DB::table('users as u')
-                -> join('times as t','u.id','=','t.user_id')
-                -> join('comments as c','c.time_id','=','t.id')
-                ->select('u.id as id','u.name as name', 't.type as type', 't.lat as lat','t.lng as lng',
-                        't.date_time as date', 'c.description as description', 'c.url_img as url_img')
+                ->join('clients as cl','cl.id','=','u.client_id')
+                ->join('times as t','u.id','=','t.user_id')
+                ->join('comments as c','c.time_id','=','t.id')
+                ->select('t.id as id','u.name as name','cl.lat as latcli','cl.lng as lngcli','t.type as type','c.id as id_comment','t.lat as lat','t.lng as lng',
+                        't.date_time as date', 'c.description as description')
                 ->where('t.type', 'Consigna')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 
+        $images = DB::table('images')->select('url','imageable_id')->get();
+
         /* dd($users); */
 
-        return view('livewire.report.rnovedad', compact('users'));
+        return view('livewire.report.rnovedad', compact('users','images'));
     }
 }
