@@ -73,7 +73,7 @@
                             <td>{{ $value->name }}</td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary" onclick="verImagenes({{$value->id_comment}})" ><i class="fas fa-images"></i></button>
-                                <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}"  data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
+                                <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}" data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
                                 <a type="button" class="btn btn-outline-primary btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
@@ -117,16 +117,23 @@
             } );
 
             if(imgUser.length > 0){
-                $('#bdImagenes').empty();
+                $('#divCarrucel').empty();
                 var imgs='';
-                imgUser.forEach(function (img) {
-                    imgs+='<div class="col-md-4"> <img '+
-                        ' src="'+img.url+'"'+
-                        ' class="w-100 shadow-1-strong rounded mb-4 imgModal"'+
-                        ' alt=""'+
-                        '/></div>';
+                imgUser.forEach(function (img,index) {
+
+                    var activo='';
+
+                    if(index == 0){
+                        activo='active';
+                    }
+
+                    imgs+= '<div class="carousel-item '+activo+'">'+
+                        '<img class="d-block w-100 imgCarrucel" src="'+img.url+'" alt="First slide" >'+
+                        '</div>';
+
                 });
-                $('#bdImagenes').append(imgs);
+                /* console.log(imgs); */
+                $('#divCarrucel').append(imgs);
                 $('#modalImg').modal('show');
             }else{
                 alert('El usuario no contiene imagenes');

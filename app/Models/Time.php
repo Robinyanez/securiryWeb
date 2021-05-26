@@ -19,7 +19,7 @@ class Time extends Model
         'type',
         'lat',
         'lng',
-        'users_id',
+        'user_id',
     ];
 
     public function user(){

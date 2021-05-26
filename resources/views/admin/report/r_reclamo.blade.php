@@ -8,12 +8,13 @@
         #map {
             height: 550px;
         }
-        .imgModal{
-            height: 280px !important;
-        }
         .shadow-1-strong {
             -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.25),0 3px 10px 0 rgba(0,0,0,.2)!important;
             box-shadow: 0 2px 5px 0 rgba(0,0,0,.25),0 3px 10px 0 rgba(0,0,0,.2)!important;
+        }
+        .imgCarrucel{
+            min-height: 520px !important;
+            height: 520px !important;
         }
     </style>
 
@@ -38,11 +39,6 @@
 @push('scripts')
 
     @livewireScripts
-
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_API')}}&callback=initMap&libraries=&v=weekly"
-        async
-    ></script>
 
     <script>
         $(document).ready(function() {
@@ -89,16 +85,16 @@
             initMap(gpsPosition);
         }
 
-        let map;
+        let mapa;
 
         function initMap(gpsPosition) {
-            map = new google.maps.Map(document.getElementById("map"), {
+            mapa = new google.maps.Map(document.getElementById("map"), {
                 center: gpsPosition,
                 zoom: 17,
             });
             const marker = new google.maps.Marker({
             position: gpsPosition,
-            map: map,
+            map: mapa,
             });
         }
     </script>

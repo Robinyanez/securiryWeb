@@ -60,6 +60,8 @@ Route::middleware(['auth'])->prefix('/admin')->name('admin.')->group(function(){
     Route::post('/import-cargo', [CargoController::class, 'importCargo'])->name('import.cargo');
     /* Profile */
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::get('/notification', [UserController::class, 'allNotification'])->name('notification');
+    Route::post('/markNotification', [UserController::class, 'markNotification'])->name('markNotification');
     /* Cruds */
     Route::resources([
         'user'      => UserController::class,

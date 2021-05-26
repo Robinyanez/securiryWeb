@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Notifications\ReportNotification;
+use App\Events\ReportEvent;
 use App\Models\User;
 use App\Models\Time;
 use App\Models\Apoyo;
@@ -70,6 +72,25 @@ class UserController extends Controller
             $time->save();
 
             DB::commit();
+
+            if ($request->get('type') === 'Asalto') {
+                event(new ReportEvent($time));
+            }
+            if ($request->get('type') === 'Presencia sospechoso') {
+                event(new ReportEvent($time));
+            }
+            if ($request->get('type') === 'Herido') {
+                event(new ReportEvent($time));
+            }
+            if ($request->get('type') === 'Incendio') {
+                event(new ReportEvent($time));
+            }
+            if ($request->get('type') === 'Manifestacion') {
+                event(new ReportEvent($time));
+            }
+            if ($request->get('type') === 'Aucencia relevo') {
+                event(new ReportEvent($time));
+            }
 
             return response()->json([
                 'success' => true,
@@ -216,63 +237,26 @@ class UserController extends Controller
 
     public function user2(Request $request){
 
-        $users = DB::table('users as u')
-                ->join('times as t','u.id','=','t.user_id')
-                ->join('comments as c','c.time_id','=','t.id')
-                /* ->join('images as i','i.imageable_id','=','c.id') */
-                ->select('u.id as id','u.name as name', 't.id as id_time','t.type as type','c.id as id_comment', 't.lat as lat','t.lng as lng',
-                        't.date_time as date', 'c.description as description')
-                ->where('t.type', 'Novedad')
-                ->paginate(5);
-                /* ->get(); */
+        /* ['basedatos' => function($q){
+            $q->select('db_wb_id','db_wb_nombre_base','us_wb_id');
+        }])->select('us_wb_id','us_wb_nombre')
+            ->orderBy('us_wb_nombre', 'asc')
+            ->get(); */
 
-        $json = json_decode(json_encode($users));
+        $users = User::with(['times' => function($q){
+            $q->select('id','type','user_id')->with(['comments' => function($qu){
+                $qu->select('id','description','time_id')->with(['image' => function($que){
+                    $que->select('id','url');
+                }]);
+            }])->where('type','=','Novedad');
+        }])->select('id','name')
+            ->where('id',3)
+            ->get();
 
-        /* dd($json->data); */
-        /* return response()->json($json->data); */
-        /* $dataUsers= $json->data; */
-
-        /* return $json; */
-
-        /* dd($dataUsers); */
-
-        $prueba =[];
-
-        /* foreach($json as $value){
-            array_push($prueba, $value);
-            $em = Image::select('url')->where('imageable_id',$value->id_comment)->get();
-                foreach($em as $item){
-                    $empresa['url'] = $item->url;
-                }
-        } */
-
-        foreach($json->data as $value){
-
-            /* $prueba = $key->name; */
-
-            array_push($prueba, $value);
-            /* $image = Image::select('url')->where('imageable_id',$value->id_comment)->get(); */
-
-            /* foreach($image as $img){
-                return $img->url;
-            } */
-        }
-
-        dd($prueba,$json->data);
-
-        /* $image = DB::table('images')->select('url')->where('imageable_id',$json->data[0]->id_comment)->get(); */
-
-        /* $data = $json->data;
-
-        $images = json_decode(json_encode($image));
-
-        $temp = ['users' => $data, 'url_img' => $images];
-
-        $temp['users']['img'] = $images; */
-
-        /* array_push($data[0], $images); */
-
-        /* dd(json_decode(json_encode($users)),$image,$json,$data,$temp); */
+        return response()->json([
+            'success' => true,
+            'data' => $users->toArray()
+        ]);
     }
 
 }

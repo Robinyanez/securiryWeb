@@ -117,16 +117,23 @@
             } );
 
             if(imgUser.length > 0){
-                $('#bdImagenes').empty();
+                $('#divCarrucel').empty();
                 var imgs='';
-                imgUser.forEach(function (img) {
-                    imgs+='<div class="col-md-4"> <img '+
-                        ' src="'+img.url+'"'+
-                        ' class="w-100 shadow-1-strong rounded mb-4 imgModal"'+
-                        ' alt=""'+
-                        '/></div>';
+                imgUser.forEach(function (img,index) {
+
+                    var activo='';
+
+                    if(index == 0){
+                        activo='active';
+                    }
+
+                    imgs+= '<div class="carousel-item '+activo+'">'+
+                        '<img class="d-block w-100 imgCarrucel" src="'+img.url+'" alt="First slide" >'+
+                        '</div>';
+
                 });
-                $('#bdImagenes').append(imgs);
+                /* console.log(imgs); */
+                $('#divCarrucel').append(imgs);
                 $('#modalImg').modal('show');
             }else{
                 alert('El usuario no contiene imagenes');

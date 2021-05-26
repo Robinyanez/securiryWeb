@@ -177,8 +177,21 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function profile(){
+    public function allNotification()
+    {
+        $allNotification = auth()->user()->unreadNotifications;
+        return response()->json([
+            'data' => $allNotification
+        ]);
+    }
 
+    public function markNotification(Request $request)
+    {
+        auth()->user()->notifications()
+                ->when($request->get('id'), function($query) use ($request){
+                    return $query->where('id',$request->get('id'));
+                })->delete();
+        return response()->noContent();
     }
 
 }

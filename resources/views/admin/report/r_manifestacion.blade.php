@@ -32,11 +32,6 @@
 
     @livewireScripts
 
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_API')}}&callback=initMap&libraries=&v=weekly"
-        async
-    ></script>
-
     <script>
 
     $(document).ready(function() {
@@ -84,16 +79,16 @@
         initMap(gpsPosition);
     }
 
-    let map;
+    let mapa;
 
     function initMap(gpsPosition) {
-        map = new google.maps.Map(document.getElementById("map"), {
+        mapa = new google.maps.Map(document.getElementById("map"), {
             center: gpsPosition,
             zoom: 17,
         });
         const marker = new google.maps.Marker({
         position: gpsPosition,
-        map: map,
+        map: mapa,
         });
     }
 
