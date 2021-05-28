@@ -143,7 +143,6 @@ class UserController extends Controller
             $img = 'img_'.time().'_'.uniqid().'_'.$file->getClientOriginalName();
             $route = public_path().'/img';
             $file->move($route , $img);
-
             $comment->url_img = env('APP_URL').'/img/'.$img; */
 
             $comment->time_id = $time->id;
@@ -231,32 +230,6 @@ class UserController extends Controller
                 'message' => 'apoyo not added'
             ], 500);
         }
-    }
-
-    /* tests */
-
-    public function user2(Request $request){
-
-        /* ['basedatos' => function($q){
-            $q->select('db_wb_id','db_wb_nombre_base','us_wb_id');
-        }])->select('us_wb_id','us_wb_nombre')
-            ->orderBy('us_wb_nombre', 'asc')
-            ->get(); */
-
-        $users = User::with(['times' => function($q){
-            $q->select('id','type','user_id')->with(['comments' => function($qu){
-                $qu->select('id','description','time_id')->with(['image' => function($que){
-                    $que->select('id','url');
-                }]);
-            }])->where('type','=','Novedad');
-        }])->select('id','name')
-            ->where('id',3)
-            ->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => $users->toArray()
-        ]);
     }
 
 }
