@@ -4,7 +4,6 @@
             <div id="modalHeader" class="modal-header">
                 <div class="row">
                     <h3 class="modal-title" id="lblTituloNotificacion"></h3>
-                    <h4 class="modal-title" id="lblTituloName"></h4>
                 </div>
                 <button id="btncerrar" type="button" onclick="cerrarModalNotificacion()" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -14,7 +13,9 @@
                 <div id ="map1"></div>
             </div>
             <div id="modalFooter" class="modal-footer">
+                <h4 class="modal-title mr-auto" id="lblTituloName"></h4>
                 <button id="btncerrar2" type="button" class="btn btn-secondary" onclick="cerrarModalNotificacion()">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>

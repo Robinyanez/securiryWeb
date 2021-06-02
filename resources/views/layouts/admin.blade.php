@@ -435,10 +435,10 @@
         }
 
         function abrirModal(notificaciones){
-            document.getElementById("audio").play();
+            /* document.getElementById("audio").play(); */
             if(notificaciones.data.length > 0){
-                $('#lblTituloNotificacion').text(notificaciones.data[0].data.type);
-                $('#lblTituloName').text(notificaciones.data[0].data.user_name);
+                $('#lblTituloNotificacion').text('Alerta tipo: '+notificaciones.data[0].data.type);
+                $('#lblTituloName').text('Enviado por: '+notificaciones.data[0].data.user_name);
                 $('#modalNotification').modal('show');
                 idNotificacion= notificaciones.data[0].id;
                 var lat = parseFloat(notificaciones.data[0].data.lat);
