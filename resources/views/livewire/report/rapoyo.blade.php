@@ -35,14 +35,14 @@
                                 <i class="fas fa-sort-amount-up-alt"></i>
                             @endif
                         </th>
-                        <th scope="col" wire:click="sortByTable('type')">Tipo
-                            @if ($sortDirection !== 'asc' && $sortField == 'type')
+                        <th scope="col">Coordenadas</th>
+                        <th scope="col" wire:click="sortByTable('description')">Descripción
+                            @if ($sortDirection !== 'asc' && $sortField == 'description')
                                 <i class="fas fa-sort-amount-down-alt"></i>
                             @else
                                 <i class="fas fa-sort-amount-up-alt"></i>
                             @endif
                         </th>
-                        <th scope="col">Coordenadas</th>
                         <th scope="col" wire:click="sortByTable('name')">Nombre
                             @if ($sortDirection !== 'asc' && $sortField == 'name')
                                 <i class="fas fa-sort-amount-down-alt"></i>
@@ -50,19 +50,32 @@
                                 <i class="fas fa-sort-amount-up-alt"></i>
                             @endif
                         </th>
-                        <th>Opciones</th>
+                        <th scope="col" wire:click="sortByTable('puesto')">Nombre
+                            @if ($sortDirection !== 'asc' && $sortField == 'puesto')
+                                <i class="fas fa-sort-amount-down-alt"></i>
+                            @else
+                                <i class="fas fa-sort-amount-up-alt"></i>
+                            @endif
+                        </th>
+                        <th scope="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $value)
                         <tr>
                             <td>{{ $value->date }}</td>
-                            <td>{{ $value->type }}</td>
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
+                            @if (is_null($value->description))
+                                <td>Descripción Vacia</td>
+                            @else
+                                <td>{{ $value->description}}</td>
+                            @endif
                             <td>{{ $value->name }}</td>
+                            <td>{{ $value->puesto }}</td>
                             <td>
+                                <button type="button" class="btn btn-outline-primary" onclick="verImagenes({{$value->id_apoyo}})" ><i class="fas fa-images"></i></button>
                                 <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}"  data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
-                                <a type="button" class="btn btn-outline-primary btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                <a type="button" class="btn btn-outline-success btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}},{{$value->lng}},'map2');" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
                             </td>
@@ -72,6 +85,7 @@
             </table>
 
             @include('modal.position')
+            @include('modal.img')
 
             <div class="container text-center d-flex justify-content-center align-items-center m-3">
                 {{ $users->links() }}
@@ -83,4 +97,51 @@
         @endif
     </div>
 </div>
+
+@push('scripts')
+
+    <script>
+
+        var users = new Array();
+        users = @JSON($users);
+
+        var images = new Array();
+        images = @JSON($images);
+
+        function imgPosition(element){
+            document.getElementById('imgModalP').src=element.dataset.imagem;
+        }
+
+        function verImagenes(idUser){
+            var imgUser = images.filter( function (element){
+                return  element.imageable_id == idUser ;
+            } );
+
+            if(imgUser.length > 0){
+                $('#divCarrucel').empty();
+                var imgs='';
+                imgUser.forEach(function (img,index) {
+
+                    var activo='';
+
+                    if(index == 0){
+                        activo='active';
+                    }
+
+                    imgs+= '<div class="carousel-item '+activo+'">'+
+                        '<img class="d-block w-100 imgCarrucel" src="'+img.url+'" alt="First slide" >'+
+                        '</div>';
+
+                });
+                /* console.log(imgs); */
+                $('#divCarrucel').append(imgs);
+                $('#modalImg').modal('show');
+            }else{
+                alert('El usuario no contiene imagenes');
+            }
+        }
+
+    </script>
+
+@endpush
 

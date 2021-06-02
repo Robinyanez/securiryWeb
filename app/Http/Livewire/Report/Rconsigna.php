@@ -50,7 +50,7 @@ class Rconsigna extends Component
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 
-        $images = DB::table('images')->select('url','imageable_id')->get();
+        $images = DB::table('images')->select('url','imageable_id')->where('imageable_type','App\Models\Comment')->get();
 
         /* dd($users); */
 

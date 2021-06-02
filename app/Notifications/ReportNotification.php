@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Auth;
 
 class ReportNotification extends Notification
 {
@@ -62,7 +63,7 @@ class ReportNotification extends Notification
             'type'      => $this->time->type,
             'lat'       => $this->time->lat,
             'lng'       => $this->time->lng,
-            'user_id'   => $this->time->user_id,
+            'user_name'   => Auth::user()->name,
         ];
     }
 }

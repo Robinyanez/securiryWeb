@@ -43,15 +43,19 @@ class Rapoyo extends Component
                 ->join('clients as c','c.id','=','u.client_id')
                 ->join('times as t','u.id','=','t.user_id')
                 ->join('apoyos as a','t.id','=','a.time_id')
-                ->select('t.id as id','u.name as name','a.actividad as type','c.lat as latcli','c.lng as lngcli','t.lat as lat','t.lng as lng','t.date_time as date')
+                ->join('puestos as p','p.id','=','a.puesto_id')
+                ->select('t.id as id','u.name as name','a.id as id_apoyo','a.description as description','a.actividad as type','p.name as puesto','c.lat as latcli',
+                        'c.lng as lngcli','t.lat as lat','t.lng as lng','t.date_time as date')
                 ->where('u.cargo_id','4')
                 ->where('t.type','Apoyo')
                 ->where('u.name', 'LIKE', "%{$this->search}%")
                 ->orderBy($this->sortField, $this->sortDirection)
                 ->paginate($this->perPage);
 
+        $images = DB::table('images')->select('url','imageable_id')->where('imageable_type','App\Models\Apoyo')->get();
+
                 /* dd($users); */
 
-        return view('livewire.report.rapoyo', compact('users'));
+        return view('livewire.report.rapoyo', compact('users','images'));
     }
 }

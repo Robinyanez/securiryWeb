@@ -5,7 +5,7 @@
     @livewireStyles
 
     <style type="text/css">
-        #map {
+        #map2 {
             height: 550px;
         }
         .shadow-1-strong {
@@ -59,7 +59,7 @@
 
                 var metrosDistancia=getDistanciaMetros(latitudStatico,longitudStatico,latitudCli,longitudCli);
                 if(metrosDistancia > 25){
-                    $('#btnMap'+id).removeClass('btn-outline-primary');
+                    $('#btnMap'+id).removeClass('btn-outline-success');
                     $('#btnMap'+id).addClass('btn-outline-danger');
                 }
             });
@@ -80,23 +80,6 @@
             return d.toFixed(2) ;
         }
 
-        function positions(data1,data2){
-            const gpsPosition = {lat: data1, lng: data2 };
-            initMap(gpsPosition);
-        }
-
-        let mapa;
-
-        function initMap(gpsPosition) {
-            mapa = new google.maps.Map(document.getElementById("map"), {
-                center: gpsPosition,
-                zoom: 17,
-            });
-            const marker = new google.maps.Marker({
-            position: gpsPosition,
-            map: mapa,
-            });
-        }
     </script>
 
 @endpush

@@ -84,16 +84,30 @@ class ReportController extends Controller
         return response()->json($users);
     }
 
-    public function images($id){
+    public function imagesCommet($id){
 
-        $images = Image::select('url','imageable_id')->where('imageable_id',$id)->get();
+        $images = Image::select('url','imageable_type','imageable_id')
+                        ->where('imageable_id',$id)
+                        ->where('imageable_type','App\Models\Comment')
+                        ->get();
+
+        return response()->json($images);
+    }
+
+    public function imagesApoyo($id){
+
+        $images = Image::select('url','imageable_type','imageable_id')
+                        ->where('imageable_id',$id)
+                        ->where('imageable_type','App\Models\Apoyo')
+                        ->get();
 
         return response()->json($images);
     }
 
     public function imagesAll(){
 
-        $images = Image::select('url','imageable_id')->get();
+        $images = Image::select('url','imageable_type','imageable_id')
+                        ->get();
 
         return response()->json($images);
     }
@@ -106,10 +120,26 @@ class ReportController extends Controller
                 ->join('times as t','u.id','=','t.user_id')
                 ->join('apoyos as a','t.id','=','a.time_id')
                 ->join('puestos as p','p.id','=','a.puesto_id')
-                ->select('t.id as id','u.name as name','a.actividad as type','p.name as puesto','t.lat as lat','t.lng as lng','t.date_time as date')
+                ->select('t.id as id','a.id as id_apoyo','u.name as name','a.actividad as type','p.name as puesto','t.lat as lat','t.lng as lng','t.date_time as date')
                 ->where('u.id',$user_id)
                 ->orderBy('t.date_time','desc')
-                ->paginate(5);
+                ->paginate(10);
+
+        return response()->json($users);
+    }
+
+    public function apoyoDetail(Request $request, $id){
+
+        $user_id = Auth::user()->id;
+
+        $users = DB::table('users as u')
+                ->join('times as t','u.id','=','t.user_id')
+                ->join('apoyos as a','t.id','=','a.time_id')
+                ->join('puestos as p','p.id','=','a.puesto_id')
+                ->select('t.id as id','a.id as id_apoyo','u.name as name','a.actividad as type','a.description as description','p.name as puesto','t.lat as lat','t.lng as lng','t.date_time as date')
+                ->where('t.id',$id)
+                ->where('u.id',$user_id)
+                ->get();
 
         return response()->json($users);
     }

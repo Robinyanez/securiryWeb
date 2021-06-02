@@ -11,7 +11,7 @@
 
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner" id="divCarrucel">
-                        <div class="carousel-item active">
+                        {{-- <div class="carousel-item active">
                             <img class="d-block w-100" src="..." alt="First slide">
                         </div>
                         <div class="carousel-item">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="carousel-item">
                             <img class="d-block w-100" src="..." alt="Third slide">
-                        </div>
+                        </div> --}}
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>

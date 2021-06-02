@@ -210,9 +210,24 @@ class UserController extends Controller
 
             $apoyo = new Apoyo;
             $apoyo->actividad = $request->get('actividad');
+            $apoyo->description = $request->get('description');
             $apoyo->time_id = $time->id;
             $apoyo->puesto_id = $request->get('puesto_id');
             $apoyo->save();
+
+            $urlimagenes = [];
+
+            $imagenes = $request->file('url_img');
+
+            foreach ($imagenes as $file) {
+
+                $img = 'img_'.time().'_'.uniqid().'_'.$file->getClientOriginalName();
+                $route = public_path().'/img';
+                $file->move($route , $img);
+                $urlimagenes[]['url'] = env('APP_URL').'/img/'.$img;
+            }
+
+            $apoyo->image()->createMany($urlimagenes);
 
             DB::commit();
 

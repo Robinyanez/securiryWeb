@@ -17,4 +17,8 @@ class Apoyo extends Model
         'time_id',
         'puesto_id',
     ];
+
+    public function image(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

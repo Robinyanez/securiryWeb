@@ -58,23 +58,16 @@
                         <tr>
                             <td>{{ $value->date }}</td>
                             <td>{{ $value->lat}}, {{$value->lng}}</td>
-                            <td>{{ $value->description}}</td>
-
-                            {{-- <td>
-                                @foreach ($images as $item)
-                                    @if ($value->id_comment === $item->imageable_id)
-                                        <img style="height: 100px; width: 100px;" src="{{ $item->url }}" class="rounded-circle">
-                                    @else
-
-                                    @endif
-                                @endforeach
-                            </td> --}}
-
+                            @if (is_null($value->description))
+                                <td>Descripción Vacia</td>
+                            @else
+                                <td>{{ $value->description}}</td>
+                            @endif
                             <td>{{ $value->name }}</td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary" onclick="verImagenes({{$value->id_comment}})" ><i class="fas fa-images"></i></button>
                                 <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}" data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
-                                <a type="button" class="btn btn-outline-primary btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                <a type="button" class="btn btn-outline-success btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}},{{$value->lng}},'map2');" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
                             </td>

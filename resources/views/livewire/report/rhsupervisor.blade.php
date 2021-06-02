@@ -62,7 +62,7 @@
                             <td>{{ $value->name }}</td>
                             <td>
                                 <input type="hidden" class="coordenadasMap" data-estaticodatos="{{$value->latcli}},{{$value->lngcli}}"  data-clientedatos="{{$value->lat}}, {{$value->lng}}" data-iditem="{{$value->id}}" >
-                                <a type="button" class="btn btn-outline-primary btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
+                                <a type="button" class="btn btn-outline-success btnRepotes" id="btnMap{{$value->id}}" onClick="positions({{$value->lat}}, {{$value->lng}});" data-toggle="modal" data-backdrop="static" data-target="#modalPosition">
                                     <i class="fas fa-map-marked-alt"></i>
                                 </a>
                             </td>

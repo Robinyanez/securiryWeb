@@ -38,12 +38,14 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:api'], function () {
     Route::post('/comment', [UserController::class, 'comment']);
     Route::post('/apoyo', [UserController::class, 'apoyo']);
     Route::get('/report/novedad', [ReportController::class, 'novedad']);
-    Route::get('/report/novedad/novedadDetail/{id}', [ReportController::class, 'novedadDetail']);
+    Route::get('/report/novedad/detail/{id}', [ReportController::class, 'novedadDetail']);
     Route::get('/report/consigna', [ReportController::class, 'consigna']);
-    Route::get('/report/consigna/consignaDetail/{id}', [ReportController::class, 'consignaDetail']);
+    Route::get('/report/consigna/detail/{id}', [ReportController::class, 'consignaDetail']);
     Route::get('/report/apoyo', [ReportController::class, 'apoyo']);
-    Route::get('/report/images/{id}', [ReportController::class, 'images']);
-    Route::get('/report/imagesAll', [ReportController::class, 'imagesAll']);
+    Route::get('/report/apoyo/detail/{id}', [ReportController::class, 'apoyoDetail']);
+    Route::get('/report/commet/images/{id}', [ReportController::class, 'imagesCommet']);
+    Route::get('/report/apoyo/images/{id}', [ReportController::class, 'imagesApoyo']);
+    Route::get('/report/images/all', [ReportController::class, 'imagesAll']);
 
 });
 

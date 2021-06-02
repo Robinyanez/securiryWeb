@@ -22,8 +22,23 @@
     <link href={{ asset('admin/css/sb-admin-2.min.css') }} rel="stylesheet">
 
     <style type="text/css">
-        #idmap {
-            height: 550px;
+        #map1 {
+            height: 500px;
+        }
+        #lblTituloNotificacion, #lblTituloName{
+            color: #C12F10;
+        }
+        #btncerrar {
+            color: #C12F10;
+        }
+        #btncerrar2 {
+            background: #C12F10;
+        }
+        #modalHeader, #modalFooter{
+            border-block: 5px solid #C12F10;
+        }
+        #audio{
+        display: none
         }
     </style>
 
@@ -46,19 +61,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Seminter<sup>2</sup></div>
             </a>
-
-            <!-- Divider -->
-            {{-- <hr class="sidebar-divider my-0"> --}}
-
-            <!-- Nav Item - Dashboard -->
-            {{-- <li class="nav-item active">
-                <a class="nav-link">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    @auth
-                        <span>{{ Auth::user()->name }}</span>
-                    @endauth
-                </a>
-            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -133,16 +135,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>REPORTES</span>
+                    <span>REPORTE HORAS</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Seminter:</h6>
-                        <a class="collapse-item" href="{{ route('admin.report.time.vigilant')}}">Horas Vigilantes</a>
-                        <a class="collapse-item" href={{ route('admin.report.time.supervisor')}}>Horas Supervisores</a>
-                        <a class="collapse-item" href={{ route('admin.report.apoyo')}}>Horas Apoyo</a>
-                        <a class="collapse-item" href={{ route('admin.report.hombre.vivo')}}>Horas Hombre Vivo</a>
+                        <a class="collapse-item" href="{{ route('admin.report.time.vigilant')}}">Vigilantes</a>
+                        <a class="collapse-item" href={{ route('admin.report.time.supervisor')}}>Supervisores</a>
+                        <a class="collapse-item" href={{ route('admin.report.apoyo')}}>Apoyo Actividades</a>
+                        <a class="collapse-item" href={{ route('admin.report.hombre.vivo')}}>Hombre Vivo</a>
 
                     </div>
                 </div>
@@ -372,6 +374,10 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <audio id="audio">
+        <source type="audio/mpeg" src="/sound/emergency027.mp3">
+    </audio>
+
     @include('modal.notification')
 
     <!-- Logout Modal-->
@@ -418,7 +424,9 @@
                 }
             }, 3000);
         }
+
         window.onload= pageload();
+
         function buscarNotificaciones(){
             fetch('{{ route('admin.notification') }}')
             .then(response => response.json())
@@ -427,36 +435,18 @@
         }
 
         function abrirModal(notificaciones){
+            document.getElementById("audio").play();
             if(notificaciones.data.length > 0){
                 $('#lblTituloNotificacion').text(notificaciones.data[0].data.type);
+                $('#lblTituloName').text(notificaciones.data[0].data.user_name);
                 $('#modalNotification').modal('show');
                 idNotificacion= notificaciones.data[0].id;
                 var lat = parseFloat(notificaciones.data[0].data.lat);
                 var lng = parseFloat(notificaciones.data[0].data.lng);
 
-                positions(lat,lng);
+                positions(lat,lng,'map1');
                 modalOpen=true;
             }
-        }
-
-        function positions(data1,data2){
-
-            const gpsPosition = {lat: data1, lng: data2 };
-            initMap(gpsPosition);
-        }
-
-        var map;
-
-        function initMap(gpsPosition) {
-            map = new google.maps.Map(document.getElementById("idmap"), {
-                center: gpsPosition,
-                zoom: 17,
-            });
-            const marker = new google.maps.Marker({
-            position: gpsPosition,
-            map: map,
-            });
-
         }
 
         function cerrarModalNotificacion(){
@@ -467,7 +457,7 @@
                 data: {"_token": CSRF_TOKEN, "id":idNotificacion,},
                 dataType: 'JSON',
                 success: function (data) {
-                    console.log('me eliminaroy wey :%27');
+                    console.log('Notificacion Eliminada');
                 }
             });
             modalOpen=false;
@@ -478,7 +468,6 @@
 
     <script src={{ asset('admin/vendor/jquery/jquery.min.js') }}></script>
     <script src={{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}></script>
-
     <!-- Core plugin JavaScript-->
     <script src={{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}></script>
 
@@ -491,6 +480,7 @@
     <!-- Page level custom scripts -->
     <script src={{ asset('admin/js/demo/chart-area-demo.js') }}></script>
     <script src={{ asset('admin/js/demo/chart-pie-demo.js') }}></script>
+    <script src={{ asset('js/maps.js') }}></script>
 
     @stack('scripts')
 

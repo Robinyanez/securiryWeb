@@ -16,6 +16,7 @@ class CreateApoyosTable extends Migration
         Schema::create('apoyos', function (Blueprint $table) {
             $table->id();
             $table->string('actividad')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
 
             $table->foreignId('time_id')
